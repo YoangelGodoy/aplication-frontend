@@ -1,12 +1,35 @@
 // Here you can add other styles
+
 .bg-primary {
-    background-color: #f9b115 !important;
+    background-color: #004186de !important;
+}
+
+.update{
+    width: 2.6cm;
+    color: white;
+    background-color: #004186de;
+    display: table-row;
+    margin-right: 0.3cm;
+}
+:hover.update{
+    background-color: #013063de;
+    color: white;
+}
+
+.delete{
+    width: 2cm;
+    color: white;
+    background-color: red;
+}
+:hover.delete{
+    background-color: rgb(180, 0, 0);
+    color: white;
 }
 
 #login{
-    background-color: #f9b115;
-    border-color: #f9b115;
-    color: black;
+    background-color: #004186de;
+    border-color: #004186de;
+    color: white;
 }
 .px-0{
     color: black !important;
@@ -19,6 +42,6 @@
 }
 
 .text-center {
-    color: black;
+    color: white;
 }
 

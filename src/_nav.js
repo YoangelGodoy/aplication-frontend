@@ -6,11 +6,11 @@ import {
   cilChartPie,
   cilCursor,
   cilDescription,
-  cilDrop,
+  cilGroup,
   cilNotes,
-  cilPencil,
+  cilTruck,
   cilPuzzle,
-  cilSpeedometer,
+  cilHome,
   cilStar,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
@@ -20,7 +20,7 @@ const _nav = [
     component: CNavItem,
     name: 'Dashboard',
     to: '/dashboard',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilHome} customClassName="nav-icon" />,
     badge: {
       color: 'info',
     },
@@ -32,16 +32,22 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Choferes',
-    to: '/theme/colors',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    to: '/drivers',
+    icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'Typography',
+    name: 'Gruas',
     to: '/theme/typography',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilTruck} customClassName="nav-icon" />,
   },
   {
+    component: CNavItem,
+    name: 'Clientes',
+    to: '/cliente',
+    icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
+  },
+  /*{
     component: CNavTitle,
     name: 'Components',
   },
@@ -266,7 +272,7 @@ const _nav = [
       color: 'info',
       text: 'NEW',
     },
-  },
+  },**/
   {
     component: CNavTitle,
     name: 'Extras',
