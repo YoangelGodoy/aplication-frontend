@@ -49,12 +49,18 @@
 .text-center {
     color: white;
 }
-.img{
-    width: 30px;
-    height: 30px;
-    display:flex;
-    justify-content: first baseline;
-    
+// .img{
+//     width: 30px;
+//     height: 30px;
+//     display:flex;
+//     justify-content: first baseline;
+
+#title{
+    width: 0.3cm;
+    height: 0.3cm;
+    display: table-row;
+    justify-content:center;
+    text-align: center;
 }
 // #img1{
 //     margin-right: 10px;

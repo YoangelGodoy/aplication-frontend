@@ -15,7 +15,11 @@ import {
   cilPlus,
   cilList,
   cilLibraryAdd,
-  cilCreditCard
+  cilCreditCard,
+  cilWallet,
+  cilUserPlus,
+  cilUser,
+  cibCcVisa
 } from '@coreui/icons'
 import { CNav, CNavbar, CNavGroup, CNavItem, CNavTitle} from '@coreui/react'
 import { compose } from 'redux'
@@ -29,6 +33,18 @@ const _nav = [
     badge: {
       color: 'info',
     },
+  },
+  {
+    component: CNavItem,
+    name: 'Login',
+    to: '/login',
+    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Registro',
+    to: '/register',
+    icon: <CIcon icon={cilUserPlus} customClassName="nav-icon" />,
   },
   {
     component: CNavTitle,
@@ -56,6 +72,12 @@ const _nav = [
         name: 'Licencias',
         to:'/drivers/añadirLicencia',
         icon: <CIcon icon={cilCreditCard} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Pagos a Choferes',
+        to:'/drivers/pagos',
+        icon: <CIcon icon={cibCcVisa} customClassName="nav-icon" />,
       },
     ]
   },
@@ -91,9 +113,16 @@ const _nav = [
         name: 'Lista de Servicios',
         to: '/servicios/lista',
         icon: <CIcon icon={cilList} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Pago de Servicio',
+        to: '/servicios/pagoServicio',
+        icon: <CIcon icon={cilWallet} customClassName="nav-icon" />,
       }
     ]
   },
+
   /*{
     component: CNavTitle,
     name: 'Components',
@@ -320,37 +349,28 @@ const _nav = [
       text: 'NEW',
     },
   },**/
-  {
-    component: CNavTitle,
-    name: 'Extras',
-  },
-  {
-    component: CNavGroup,
-    name: 'Pages',
-    icon: <CIcon icon={cilFile} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Login',
-        to: '/login',
-      },
-      {
-        component: CNavItem,
-        name: 'Register',
-        to: '/register',
-      },
-      {
-        component: CNavItem,
-        name: 'Error 404',
-        to: '/404',
-      },
-      {
-        component: CNavItem,
-        name: 'Error 500',
-        to: '/500',
-      },
-    ],
-  },
+  // {
+  //   component: CNavTitle,
+  //   name: 'Extras',
+  // },
+
+  // {
+  //   component: CNavGroup,
+  //   name: 'Pages',
+  //   icon: <CIcon icon={cilFile} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Error 404',
+  //       to: '/404',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Error 500',
+  //       to: '/500',
+  //     },
+  //   ],
+  // },
   /*
   {
     component: CNavItem,
