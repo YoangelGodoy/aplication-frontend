@@ -14,7 +14,8 @@ import {
   cilFile,
   cilPlus,
   cilList,
-  cilLibraryAdd
+  cilLibraryAdd,
+  cilCreditCard
 } from '@coreui/icons'
 import { CNav, CNavbar, CNavGroup, CNavItem, CNavTitle} from '@coreui/react'
 import { compose } from 'redux'
@@ -34,10 +35,29 @@ const _nav = [
     name: 'Registros',
   },
   {
-    component: CNavItem,
+    component: CNavGroup,
     name: 'Choferes',
-    to: '/drivers',
     icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Añadir Chofer',
+        to: '/drivers/añadir',
+        icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Lista de Choferes',
+        to:'/drivers/lista',
+        icon: <CIcon icon={cilList} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Licencias',
+        to:'/drivers/añadirLicencia',
+        icon: <CIcon icon={cilCreditCard} customClassName="nav-icon" />,
+      },
+    ]
   },
   {
     component: CNavItem,
@@ -62,7 +82,7 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'Añadir',
+        name: 'Añadir Servicio',
         to: '/servicios/añadir',
         icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
       },

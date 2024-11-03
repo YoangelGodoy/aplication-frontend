@@ -49,4 +49,20 @@
 .text-center {
     color: white;
 }
+.img{
+    width: 30px;
+    height: 30px;
+    display:flex;
+    justify-content: first baseline;
+    
+}
+// #img1{
+//     margin-right: 10px;
+// }
+// #h2logo{
 
+//     text-decoration: blue;
+//     border-bottom: blue;
+// }
+// <div className='img'><img id='img1' width={50} height={40} src={Logo}></img ></div>
+// import Logo from '/Users/Yoangel/Downloads/logo/logo.png'
