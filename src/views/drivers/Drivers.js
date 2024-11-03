@@ -15,14 +15,26 @@ import {
   CTableRow,
   CTableHeaderCell,
   CTableBody,
-  CTableDataCell
+  CTableDataCell,
+  CBadge
 } from '@coreui/react'
 
 const GDrivers = () => {
+  
   const choferes = [
     { id: 1, cedula: '30782050', nombre: 'Yoangel', apellido: 'Godoy', telefono: '04147287332', direccion: 'Michelena', status: 'Activo' },
     { id: 2, cedula: '30651748', nombre: 'Aaron', apellido: 'Godoy', telefono: '04127584461', direccion: 'Lobatera', status: 'Inactivo' },
   ]
+  const ColorStatus = (status) => {
+    switch (status) {
+      case 'Inactivo':
+        return 'warning'
+      case 'Activo':
+        return 'success'
+      default:
+        return 'secondary'
+    }
+  }
 
   return (
     <CContainer>
@@ -85,15 +97,11 @@ const GDrivers = () => {
                     />
                   </CCol>
                   <CCol md={6}>
-                    <CFormSelect
-                      id="status"
-                      name="status"
-                      label="Status"
-                      options={[
-                        { label: 'Activo', value: 'activo' },
-                        { label: 'Inactivo', value: 'inactivo' },
-                      ]}
-                    />
+                  <CFormSelect id="status" name="status" label="Status">
+                  <option value="">Seleccione...</option>
+                  <option value="activo">Activo</option>
+                  <option value="inactivo">Inactivo</option>
+                  </CFormSelect>
                   </CCol>
                 </CRow>
                 <CButton type="submit" color="primary" className="mt-3">
@@ -131,7 +139,11 @@ const GDrivers = () => {
                       <CTableDataCell>{chofer.apellido}</CTableDataCell>
                       <CTableDataCell>{chofer.telefono}</CTableDataCell>
                       <CTableDataCell>{chofer.direccion}</CTableDataCell>
-                      <CTableDataCell>{chofer.status}</CTableDataCell>
+                      <CTableDataCell>
+                        <CBadge color={ColorStatus(chofer.status)}>
+                          {chofer.status}
+                        </CBadge>
+                      </CTableDataCell>
                       <CTableDataCell>
                         <CButton className="update">
                          Actualizar

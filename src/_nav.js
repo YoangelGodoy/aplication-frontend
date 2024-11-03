@@ -11,14 +11,18 @@ import {
   cilTruck,
   cilPuzzle,
   cilHome,
-  cilStar,
+  cilFile,
+  cilPlus,
+  cilList,
+  cilLibraryAdd
 } from '@coreui/icons'
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import { CNav, CNavbar, CNavGroup, CNavItem, CNavTitle} from '@coreui/react'
+import { compose } from 'redux'
 
 const _nav = [
   {
     component: CNavItem,
-    name: 'Dashboard',
+    name: 'Inicio',
     to: '/dashboard',
     icon: <CIcon icon={cilHome} customClassName="nav-icon" />,
     badge: {
@@ -38,7 +42,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Gruas',
-    to: '/theme/typography',
+    to: '/towTrucks',
     icon: <CIcon icon={cilTruck} customClassName="nav-icon" />,
   },
   {
@@ -46,6 +50,29 @@ const _nav = [
     name: 'Clientes',
     to: '/cliente',
     icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
+    name: 'Servicios',
+  },
+  {
+    component: CNavGroup,
+    name: 'Servicio de Grúa',
+    icon: <CIcon icon={cilLibraryAdd} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Añadir',
+        to: '/servicios/añadir',
+        icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Lista de Servicios',
+        to: '/servicios/lista',
+        icon: <CIcon icon={cilList} customClassName="nav-icon" />,
+      }
+    ]
   },
   /*{
     component: CNavTitle,
@@ -280,7 +307,7 @@ const _nav = [
   {
     component: CNavGroup,
     name: 'Pages',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilFile} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -304,12 +331,13 @@ const _nav = [
       },
     ],
   },
+  /*
   {
     component: CNavItem,
     name: 'Docs',
     href: 'https://coreui.io/react/docs/templates/installation/',
     icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
-  },
+  },*/
 ]
 
 export default _nav
