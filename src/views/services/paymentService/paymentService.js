@@ -18,12 +18,12 @@ import {
   CTableDataCell,
 } from '@coreui/react'
 
-const pagoservicio = [
-    { id:'001', cedula: '30987654', idS:'001', fecha:'2023-05-01', status:'Pendiente', metodo:'Transferencia',  monto:'750', decrip:'Pago'},
-    { id:'002', cedula: '30932654', idS:'002', fecha:'2023-06-01', status:'Completado', metodo:'Efectivo',  monto:'520', decrip:'Servicio remolque carro'},
+const paymentService = [
+    { id:'001', idCard: '30987654', idService:'001', date:'2023-05-01', status:'Pendiente', method:'Transferencia',  mount:'750', descrip:'Pago'},
+    { id:'002', idCard: '30932654', idService:'002', date:'2023-06-01', status:'Completado', method:'Efectivo',  mount:'520', descrip:'Servicio remolque carro'},
   ]
 
- function PagoServicio() {
+ function paymentServices() {
   return (
     <CRow>
       <CCol md={12}>
@@ -37,8 +37,8 @@ const pagoservicio = [
                 <CCol md={6}>
                   <CFormInput
                     type="text"
-                    id="cedulaCliente"
-                    name="cedulaCliente"
+                    id="idCard"
+                    name="idCard"
                     label='Cédula del Cliente'
                     placeholder='Ingresa la Cédula del Cliente'
                   />
@@ -46,8 +46,8 @@ const pagoservicio = [
                 <CCol md={6}>
                   <CFormInput
                     type="text"
-                    id="idServicio"
-                    name="idServicio"
+                    id="idService"
+                    name="idService"
                     label='ID de Servicio'
                     placeholder='Ingresa el ID del Servicio'
                   />
@@ -57,8 +57,8 @@ const pagoservicio = [
                 <CCol md={6}>
                   <CFormInput
                     type="date"
-                    id="fechaPago"
-                    name="fechaPago"
+                    id="paymentDate"
+                    name="paymentDate"
                     label='Fecha de Pago'
                   />
                 </CCol>
@@ -77,8 +77,8 @@ const pagoservicio = [
               <CRow className="mb-3">
                 <CCol md={6}>
                   <CFormSelect
-                    id="metodoPago"
-                    name="metodoPago"
+                    id="paymentMethod"
+                    name="paymentMethod"
                     label='Método de Pago'
                     placeholder='Ingresa el Metodo de Pago'
                   >
@@ -90,8 +90,8 @@ const pagoservicio = [
                 <CCol md={6}>
                   <CFormInput
                     type="number"
-                    id="monto"
-                    name="monto"
+                    id="mount"
+                    name="mount"
                     label='Monto'
                     placeholder='Ingresa el Monto'
                   />
@@ -100,8 +100,8 @@ const pagoservicio = [
               <CRow className="mb-3">
                 <CCol md={12}>
                   <CFormTextarea
-                    id="descripcion"
-                    name="descripcion"
+                    id="description"
+                    name="description"
                     label="Descripcion"
                     rows={3}
                   />
@@ -134,16 +134,16 @@ const pagoservicio = [
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-              {pagoservicio.map((pagoS) => (
+              {paymentService.map((payment) => (
                             <CTableRow>
-                            <CTableDataCell>{pagoS.id}</CTableDataCell>
-                            <CTableDataCell>{pagoS.cedula}</CTableDataCell>
-                            <CTableDataCell>{pagoS.idS}</CTableDataCell>
-                            <CTableDataCell>{pagoS.fecha}</CTableDataCell>
-                            <CTableDataCell>{pagoS.status}</CTableDataCell>
-                            <CTableDataCell>{pagoS.metodo}</CTableDataCell>
-                            <CTableDataCell>{pagoS.monto}</CTableDataCell>
-                            <CTableDataCell>{pagoS.decrip}</CTableDataCell>
+                            <CTableDataCell>{payment.id}</CTableDataCell>
+                            <CTableDataCell>{payment.idCard}</CTableDataCell>
+                            <CTableDataCell>{payment.idService}</CTableDataCell>
+                            <CTableDataCell>{payment.date}</CTableDataCell>
+                            <CTableDataCell>{payment.status}</CTableDataCell>
+                            <CTableDataCell>{payment.method}</CTableDataCell>
+                            <CTableDataCell>{payment.mount}</CTableDataCell>
+                            <CTableDataCell>{payment.descrip}</CTableDataCell>
                             </CTableRow>
                         ))}
               </CTableBody>
@@ -155,4 +155,4 @@ const pagoservicio = [
   )
 }
 
-export default PagoServicio
+export default paymentServices

@@ -17,13 +17,13 @@ import {
   CTableDataCell,
 } from '@coreui/react'
 
-  const licencia = [
-      { numero: '001', cedula: '30782050', grado: '5ta', sexo:'Femenino',emision: '2023-01-01', expiracion: '2028-01-01', },
-      { numero: '002', cedula: '30651748', grado: '4ta', sexo:'Masculino',emision: '2023-02-01', expiracion: '2028-02-01', },
+  const licences = [
+      { number: '001', idCard: '30782050', degree: '5ta', sex:'Femenino', emission: '2023-01-01', expiration: '2028-01-01', },
+      { number: '002', idCard: '30651748', degree: '4ta', sex:'Masculino', emission: '2023-02-01', expiration: '2028-02-01', },
     ]
  
 
-function GestionLicencias() {
+function Licenses() {
 
   return (
     <CRow>
@@ -123,14 +123,14 @@ function GestionLicencias() {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-              {licencia.map((licencia) => (
+              {licences.map((licence) => (
                             <CTableRow>
-                            <CTableDataCell>{licencia.numero}</CTableDataCell>
-                            <CTableDataCell>{licencia.cedula}</CTableDataCell>
-                            <CTableDataCell>{licencia.grado}</CTableDataCell>
-                            <CTableDataCell>{licencia.emision}</CTableDataCell>
-                            <CTableDataCell>{licencia.expiracion}</CTableDataCell>
-                            <CTableDataCell>{licencia.sexo}</CTableDataCell>
+                            <CTableDataCell>{licence.number}</CTableDataCell>
+                            <CTableDataCell>{licence.idCard}</CTableDataCell>
+                            <CTableDataCell>{licence.degree}</CTableDataCell>
+                            <CTableDataCell>{licence.emission}</CTableDataCell>
+                            <CTableDataCell>{licence.expiration}</CTableDataCell>
+                            <CTableDataCell>{licence.sex}</CTableDataCell>
                             <CTableDataCell>
                                 <CButton className="update">
                                 Actualizar
@@ -151,4 +151,4 @@ function GestionLicencias() {
   )
 }
 
-export default GestionLicencias
+export default Licenses

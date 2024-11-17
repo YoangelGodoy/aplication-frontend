@@ -17,13 +17,13 @@ import {
   CTableDataCell,
 } from '@coreui/react'
 
-const pagochofer = [
-    { cedula:'30780090', fecha:'2024-02-21', monto:'500', descrip:'pago mensual'},
-    { cedula:'30784590', fecha:'2024-11-21', monto:'600', descrip:'pago mensual'},
+const paymentDriver = [
+    { idCard_driver:'30780090', date:'2024-02-21', mount:'500', descrip:'pago mensual'},
+    { idCard_driver:'30784590', date:'2024-11-21', mount:'600', descrip:'pago mensual'},
 
   ]
 
-function Pagochofer() {
+function paymentsDriver() {
   return (
     <CRow>
       <CCol md={9}>
@@ -37,8 +37,8 @@ function Pagochofer() {
                 <CCol md={12}>
                   <CFormInput
                     type="text"
-                    id="cedulaChofer"
-                    name="cedulaChofer"
+                    id="idCard_driver"
+                    name="idCard_driver"
                     label="Cedula del Chofer"
                     placeholder='Ingrese la Cedula del Chofer'
                   />
@@ -48,16 +48,16 @@ function Pagochofer() {
                 <CCol md={6}>
                   <CFormInput
                     type="date"
-                    id="fechaPago"
-                    name="fechaPago"
+                    id="datePayment"
+                    name="datePayment"
                     label="Fecha del Pago"
                   />
                 </CCol>
                 <CCol md={6}>
                   <CFormInput
                     type="number"
-                    id="monto"
-                    name="monto"
+                    id="mount"
+                    name="mount"
                     label='Monto'
                     placeholder='Ingrese el Monto'
                   />
@@ -66,8 +66,8 @@ function Pagochofer() {
               <CRow className="mb-3">
                 <CCol md={12}>
                   <CFormTextarea
-                    id="descripcion"
-                    name="descripcion"
+                    id="description"
+                    name="description"
                     label="Descripcion"
                     rows={3}
                   />
@@ -97,12 +97,12 @@ function Pagochofer() {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-              {pagochofer.map((pago) => (
+              {paymentDriver.map((payment) => (
                             <CTableRow>
-                            <CTableDataCell>{pago.cedula}</CTableDataCell>
-                            <CTableDataCell>{pago.fecha}</CTableDataCell>
-                            <CTableDataCell>${pago.monto}</CTableDataCell>
-                            <CTableDataCell>{pago.descrip}</CTableDataCell>
+                            <CTableDataCell>{payment.idCard_driver}</CTableDataCell>
+                            <CTableDataCell>{payment.date}</CTableDataCell>
+                            <CTableDataCell>${payment.mount}</CTableDataCell>
+                            <CTableDataCell>{payment.descrip}</CTableDataCell>
                             </CTableRow>
                         ))}
               </CTableBody>
@@ -115,4 +115,4 @@ function Pagochofer() {
   )
 }
 
-export default Pagochofer
+export default paymentsDriver

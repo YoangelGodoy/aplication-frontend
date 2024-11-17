@@ -12,7 +12,7 @@ import {
   CContainer,
 } from '@coreui/react'
 
-const GDrivers = () => {
+const ADrivers = () => {
   
   return (
     <CContainer>
@@ -28,8 +28,8 @@ const GDrivers = () => {
                   <CCol md={6}>
                     <CFormInput
                       type="text"
-                      id="cedula"
-                      name="cedula"
+                      id="idCard"
+                      name="idCard"
                       label="Cédula"
                       placeholder="Ingrese la cédula"
                     />
@@ -37,8 +37,8 @@ const GDrivers = () => {
                   <CCol md={6}>
                     <CFormInput
                       type="text"
-                      id="nombre"
-                      name="nombre"
+                      id="name"
+                      name="name"
                       label="Nombre"
                       placeholder="Ingrese el nombre"
                     />
@@ -48,17 +48,17 @@ const GDrivers = () => {
                   <CCol md={6}>
                     <CFormInput
                       type="text"
-                      id="apellido"
-                      name="apellido"
+                      id="lastName"
+                      name="lastName"
                       label="Apellido"
                       placeholder="Ingrese el apellido"
                     />
                   </CCol>
                   <CCol md={6}>
                     <CFormInput
-                      type="tel"
-                      id="telefono"
-                      name="telefono"
+                      type="text"
+                      id="phone"
+                      name="phone"
                       label="Teléfono"
                       placeholder="Ingrese el teléfono"
                     />
@@ -68,8 +68,8 @@ const GDrivers = () => {
                   <CCol md={6}>
                     <CFormInput
                       type="text"
-                      id="direccion"
-                      name="direccion"
+                      id="address"
+                      name="address"
                       label="Dirección"
                       placeholder="Ingrese la dirección"
                     />
@@ -94,4 +94,4 @@ const GDrivers = () => {
   )
 }
 
-export default GDrivers
+export default ADrivers

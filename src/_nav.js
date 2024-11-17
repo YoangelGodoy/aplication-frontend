@@ -36,6 +36,12 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'Usuarios',
+    to: '/users',
+    icon: <CIcon icon={cilUser} customClassName="nav-icon" />
+  },
+ /*  {
+    component: CNavItem,
     name: 'Login',
     to: '/login',
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
@@ -45,7 +51,7 @@ const _nav = [
     name: 'Registro',
     to: '/register',
     icon: <CIcon icon={cilUserPlus} customClassName="nav-icon" />,
-  },
+  }, */
   {
     component: CNavTitle,
     name: 'Registros',
@@ -58,25 +64,25 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Añadir Chofer',
-        to: '/drivers/añadir',
+        to: '/drivers/add_drivers',
         icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
         name: 'Lista de Choferes',
-        to:'/drivers/lista',
+        to:'/drivers/list',
         icon: <CIcon icon={cilList} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
         name: 'Licencias',
-        to:'/drivers/añadirLicencia',
+        to:'/drivers/add_license',
         icon: <CIcon icon={cilCreditCard} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
         name: 'Pagos a Choferes',
-        to:'/drivers/pagos',
+        to:'/drivers/payments',
         icon: <CIcon icon={cibCcVisa} customClassName="nav-icon" />,
       },
     ]
@@ -90,7 +96,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Clientes',
-    to: '/cliente',
+    to: '/client',
     icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
   },
   {
@@ -105,19 +111,19 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Añadir Servicio',
-        to: '/servicios/añadir',
+        to: '/services/add',
         icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
         name: 'Lista de Servicios',
-        to: '/servicios/lista',
+        to: '/services/list',
         icon: <CIcon icon={cilList} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
         name: 'Pago de Servicio',
-        to: '/servicios/pagoServicio',
+        to: '/services/paymentService',
         icon: <CIcon icon={cilWallet} customClassName="nav-icon" />,
       }
     ]

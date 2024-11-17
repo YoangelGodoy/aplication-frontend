@@ -14,36 +14,36 @@ import {
   CBadge,
 } from '@coreui/react'
 
-const serviciosGrua = [
+const serviceTow = [
   {
     id: '001',
-    cedulaCliente: '12345678',
-    cedulaChofer: '87654321',
-    matriculaGrua: 'ABC123',
-    costo: 150.00,
-    tipoVehiculo: 'carro',
+    idCard_client: '12345678',
+    idCard_driver: '87654321',
+    tuitionTruck: 'ABC123',
+    cost: 150.00,
+    typeVehicle: 'carro',
     status: 'Completado',
-    descripcion: 'Servicio de grúa por avería en carretera'
+    descrip: 'Servicio de grúa por avería en carretera'
   },
   {
     id: '002',
-    cedulaCliente: '23456789',
-    cedulaChofer: '98765432',
-    matriculaGrua: 'XYZ789',
-    costo: 200.00,
-    tipoVehiculo: 'camion',
+    idCard_client: '23456789',
+    idCard_driver: '98765432',
+    tuitionTruck: 'XYZ789',
+    cost: 200.00,
+    typeVehicle: 'camion',
     status: 'En Proceso',
-    descripcion: 'Remolque de camión accidentado'
+    descrip: 'Remolque de camión accidentado'
   },
   {
     id: '003',
-    cedulaCliente: '23456789',
-    cedulaChofer: '98765432',
-    matriculaGrua: 'XYZ789',
-    costo: 200.00,
-    tipoVehiculo: 'camion',
+    idCard_client: '23456789',
+    idCard_driver: '98765432',
+    tuitionTruck: 'XYZ789',
+    cost: 200.00,
+    typeVehicle: 'camion',
     status: 'Pendiente',
-    descripcion: 'Remolque de camión accidentado'
+    descrip: 'Remolque de camión accidentado'
   },
 ]
 
@@ -60,7 +60,7 @@ const ColorStatus = (status) => {
   }
 }
 
-function Lista() {
+function listServices() {
   return (
     <CCard className="mb-4">
       <CCardHeader>
@@ -81,20 +81,20 @@ function Lista() {
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {serviciosGrua.map((servicio) => (
-              <CTableRow key={servicio.id}>
-                <CTableDataCell>{servicio.id}</CTableDataCell>
-                <CTableDataCell>{servicio.cedulaCliente}</CTableDataCell>
-                <CTableDataCell>{servicio.cedulaChofer}</CTableDataCell>
-                <CTableDataCell>{servicio.matriculaGrua}</CTableDataCell>
-                <CTableDataCell>${servicio.costo.toFixed(2)}</CTableDataCell>
-                <CTableDataCell>{servicio.tipoVehiculo}</CTableDataCell>
+            {serviceTow.map((service) => (
+              <CTableRow key={service.id}>
+                <CTableDataCell>{service.id}</CTableDataCell>
+                <CTableDataCell>{service.idCard_client}</CTableDataCell>
+                <CTableDataCell>{service.idCard_driver}</CTableDataCell>
+                <CTableDataCell>{service.tuitionTruck}</CTableDataCell>
+                <CTableDataCell>${service.cost.toFixed(2)}</CTableDataCell>
+                <CTableDataCell>{service.typeVehicle}</CTableDataCell>
                 <CTableDataCell>
-                  <CBadge color={ColorStatus(servicio.status)}>
-                    {servicio.status}
+                  <CBadge color={ColorStatus(service.status)}>
+                    {service.status}
                   </CBadge>
                 </CTableDataCell>
-                <CTableDataCell>{servicio.descripcion}</CTableDataCell>
+                <CTableDataCell>{service.descrip}</CTableDataCell>
               </CTableRow>
             ))}
           </CTableBody>
@@ -104,4 +104,4 @@ function Lista() {
   )
 }
 
-export default Lista
+export default listServices

@@ -18,9 +18,9 @@ import {
 } from '@coreui/react'
 
 const listaDriver  =()=>{
-    const choferes = [
-        { id: 1, cedula: '30782050', nombre: 'Yoangel', apellido: 'Godoy', telefono: '04147287332', direccion: 'Michelena', status: 'Activo' },
-        { id: 2, cedula: '30651748', nombre: 'Aaron', apellido: 'Godoy', telefono: '04127584461', direccion: 'Lobatera', status: 'Inactivo' },
+    const Drivers = [
+        { id: 1, idCard: '30782050', name: 'Yoangel', lastName: 'Godoy', phone: '04147287332', address: 'Michelena', status: 'Activo' },
+        { id: 2, idCard: '30651748', name: 'Aaron', lastName: 'Godoy', phone: '04127584461', address: 'Lobatera', status: 'Inactivo' },
       ]
       const ColorStatus = (status) => {
         switch (status) {
@@ -55,16 +55,16 @@ const listaDriver  =()=>{
                         </CTableRow>
                         </CTableHead>
                         <CTableBody>
-                        {choferes.map((chofer) => (
-                            <CTableRow key={chofer.id}>
-                            <CTableDataCell>{chofer.cedula}</CTableDataCell>
-                            <CTableDataCell>{chofer.nombre}</CTableDataCell>
-                            <CTableDataCell>{chofer.apellido}</CTableDataCell>
-                            <CTableDataCell>{chofer.telefono}</CTableDataCell>
-                            <CTableDataCell>{chofer.direccion}</CTableDataCell>
+                        {Drivers.map((driver) => (
+                            <CTableRow key={driver.id}>
+                            <CTableDataCell>{driver.idCard}</CTableDataCell>
+                            <CTableDataCell>{driver.name}</CTableDataCell>
+                            <CTableDataCell>{driver.lastName}</CTableDataCell>
+                            <CTableDataCell>{driver.phone}</CTableDataCell>
+                            <CTableDataCell>{driver.address}</CTableDataCell>
                             <CTableDataCell>
-                                <CBadge color={ColorStatus(chofer.status)}>
-                                {chofer.status}
+                                <CBadge color={ColorStatus(driver.status)}>
+                                {driver.status}
                                 </CBadge>
                             </CTableDataCell>
                             <CTableDataCell>

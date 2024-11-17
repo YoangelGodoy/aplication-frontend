@@ -13,7 +13,7 @@ import {
   CButton
 } from '@coreui/react'
 
-function AñadirS() {
+function addService() {
   return (
     <CCard className="mb-4">
       <CCardHeader>
@@ -25,18 +25,18 @@ function AñadirS() {
             <CCol md={6}>
               <CFormInput 
               type="text" 
-              id="cedulaCliente" 
-              name="cedulaCliente" 
+              id="idCard_client" 
+              name="idCard_client" 
               placeholder='Ingrese la cedula del Cliente'
               label="Cédula del Cliente"
               />
             </CCol>
             <CCol md={6}>
-              <CFormSelect id="tipoVehiculo" name="tipoVehiculo" label="Tipo de Vehiculo">
+              <CFormSelect id="typeVechicle" name="typeVehicle" label="Tipo de Vehiculo">
                 <option value="">Seleccione...</option>
-                <option value="motocicleta">Motocicleta</option>
-                <option value="camion">Camión</option>
-                <option value="carro">Carro</option>
+                <option value="motorcycle">Motocicleta</option>
+                <option value="truck">Camión</option>
+                <option value="car">Carro</option>
                 <option value="autobus">Autobús</option>
               </CFormSelect>
             </CCol>
@@ -45,8 +45,8 @@ function AñadirS() {
             <CCol md={6}>
               <CFormInput 
               type="text" 
-              id="cedulaChofer" 
-              name="cedulaChofer" 
+              id="idCard_driver" 
+              name="idCard_driver" 
               label="Cédula del Chofer"
               placeholder='Ingrese la Cédula del Chofer'
               />
@@ -54,8 +54,8 @@ function AñadirS() {
             <CCol md={6}>
               <CFormInput 
               type="text" 
-              id="matriculaGrua" 
-              name="matriculaGrua" 
+              id="tuitionTruck" 
+              name="tuitionTruck" 
               label="Matrícula de la Grúa"
               placeholder='Ingrese la Matrícula de la Grúa'
               />
@@ -65,27 +65,26 @@ function AñadirS() {
             <CCol md={6}>
               <CFormInput 
               type="number" 
-              id="costo" 
-              name="costo" 
+              id="cost" 
+              name="cost" 
               label="Costo"
               placeholder='Ingrese el Costo del Servicio'
               />
             </CCol>
             <CCol md={6}>
-              <CFormLabel htmlFor="status">Status</CFormLabel>
-              <CFormSelect id="status" name="status">
+              <CFormSelect id="status" name="status"label="Status">
                 <option value="">Seleccione...</option>
-                <option value="pendiente">Pendiente</option>
-                <option value="en_proceso">En Proceso</option>
-                <option value="completado">Completado</option>
+                <option value="pending">Pendiente</option>
+                <option value="in_progress">En Proceso</option>
+                <option value="completed">Completado</option>
               </CFormSelect>
             </CCol>
           </CRow>
           <CRow className="mb-3">
             <CCol>
               <CFormTextarea 
-              id="descripcion" 
-              name="descripcion" 
+              id="description" 
+              name="description" 
               label="Descripción"
               rows={3}>                
               </CFormTextarea>
@@ -104,4 +103,4 @@ function AñadirS() {
   )
 }
 
-export default AñadirS
+export default addService

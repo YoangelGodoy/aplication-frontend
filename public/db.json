@@ -1,0 +1,547 @@
+{
+  "users": [
+    {
+      "id": "1731793843010",
+      "idCard": "30782050",
+      "name": "yoangel ",
+      "lastName": "Godoy",
+      "phone": "123123",
+      "address": "Michelena"
+    },
+    {
+      "idCard": "16258455",
+      "name": "Noelia",
+      "lastName": "Chacon",
+      "phone": "04126458932",
+      "address": "San Cristobal",
+      "id": "1731793906075"
+    }
+  ],
+  "rol_user": [
+    {
+      "id_rol": "1",
+      "name_rol": "Admin",
+      "descripcion": "Administrator role",
+      "id": "69"
+    },
+    {
+      "id_rol": "2",
+      "name_rol": "Driver",
+      "descripcion": "Driver role",
+      "id": "194"
+    },
+    {
+      "id_rol": "3",
+      "name_rol": "Client",
+      "descripcion": "Client role",
+      "id": "26"
+    }
+  ],
+  "state": [
+    {
+      "id_state": "1",
+      "name": "Amazonas",
+      "id": "8396"
+    },
+    {
+      "id_state": "2",
+      "name": "Anzoátegui",
+      "id": "b577"
+    },
+    {
+      "id_state": "3",
+      "name": "Apure",
+      "id": "ab49"
+    },
+    {
+      "id_state": "4",
+      "name": "Aragua",
+      "id": "cf0c"
+    },
+    {
+      "id_state": "5",
+      "name": "Barinas",
+      "id": "695e"
+    },
+    {
+      "id_state": "6",
+      "name": "Bolívar",
+      "id": "9830"
+    },
+    {
+      "id_state": "7",
+      "name": "Carabobo",
+      "id": "469e"
+    },
+    {
+      "id_state": "8",
+      "name": "Cojedes",
+      "id": "92f2"
+    },
+    {
+      "id_state": "9",
+      "name": "Delta Amacuro",
+      "id": "92c2"
+    },
+    {
+      "id_state": "10",
+      "name": "Distrito Capital",
+      "id": "caec"
+    },
+    {
+      "id_state": "11",
+      "name": "Falcón",
+      "id": "d594"
+    },
+    {
+      "id_state": "12",
+      "name": "Guárico",
+      "id": "a2f3"
+    },
+    {
+      "id_state": "13",
+      "name": "Lara",
+      "id": "9088"
+    },
+    {
+      "id_state": "14",
+      "name": "Mérida",
+      "id": "202c"
+    },
+    {
+      "id_state": "15",
+      "name": "Miranda",
+      "id": "b0e3"
+    },
+    {
+      "id_state": "16",
+      "name": "Monagas",
+      "id": "1fef"
+    },
+    {
+      "id_state": "17",
+      "name": "Nueva Esparta",
+      "id": "46da"
+    },
+    {
+      "id_state": "18",
+      "name": "Portuguesa",
+      "id": "da94"
+    },
+    {
+      "id_state": "19",
+      "name": "Sucre",
+      "id": "728b"
+    },
+    {
+      "id_state": "20",
+      "name": "Táchira",
+      "id": "f32a"
+    },
+    {
+      "id_state": "21",
+      "name": "Trujillo",
+      "id": "9dad"
+    },
+    {
+      "id_state": "22",
+      "name": "La Guaira",
+      "id": "a03c"
+    },
+    {
+      "id_state": "23",
+      "name": "Yaracuy",
+      "id": "b8af"
+    },
+    {
+      "id_state": "24",
+      "name": "Zulia",
+      "id": "0e48"
+    }
+  ],
+  "municipality": [
+    {
+      "id_municipality": "1",
+      "name": "San Cristóbal",
+      "fkid_state": "20",
+      "id": "db33"
+    },
+    {
+      "id_municipality": "2",
+      "name": "Cárdenas",
+      "fkid_state": "20",
+      "id": "b15d"
+    },
+    {
+      "id_municipality": "3",
+      "name": "Guásimos",
+      "fkid_state": "20",
+      "id": "c309"
+    },
+    {
+      "id_municipality": "4",
+      "name": "Independencia",
+      "fkid_state": "20",
+      "id": "0f04"
+    },
+    {
+      "id_municipality": "5",
+      "name": "Jáuregui",
+      "fkid_state": "20",
+      "id": "63bc"
+    },
+    {
+      "id_municipality": "6",
+      "name": "Torbes",
+      "fkid_state": "20",
+      "id": "e552"
+    },
+    {
+      "id_municipality": "7",
+      "name": "Ureña",
+      "fkid_state": "20",
+      "id": "dad0"
+    },
+    {
+      "id_municipality": "8",
+      "name": "Lobatera",
+      "fkid_state": "20",
+      "id": "6624"
+    },
+    {
+      "id_municipality": "9",
+      "name": "Michelena",
+      "fkid_state": "20",
+      "id": "848c"
+    },
+    {
+      "id_municipality": "10",
+      "name": "Junín",
+      "fkid_state": "20",
+      "id": "c020"
+    },
+    {
+      "id_municipality": "11",
+      "name": "Córdoba",
+      "fkid_state": "20",
+      "id": "6576"
+    },
+    {
+      "id_municipality": "12",
+      "name": "Bolívar",
+      "fkid_state": "20",
+      "id": "18c0"
+    },
+    {
+      "id_municipality": "13",
+      "name": "Capacho Nuevo",
+      "fkid_state": "20",
+      "id": "6788"
+    },
+    {
+      "id_municipality": "14",
+      "name": "Capacho Viejo",
+      "fkid_state": "20",
+      "id": "122d"
+    },
+    {
+      "id_municipality": "15",
+      "name": "Ayacucho",
+      "fkid_state": "20",
+      "id": "3399"
+    },
+    {
+      "id_municipality": "16",
+      "name": "Panamericano",
+      "fkid_state": "20",
+      "id": "9b8d"
+    },
+    {
+      "id_municipality": "17",
+      "name": "San Judas Tadeo",
+      "fkid_state": "20",
+      "id": "bcdf"
+    }
+  ],
+  "driver": [
+    {
+      "id_driver": "1",
+      "name_driver": "Jane",
+      "lastname_driver": "Smith",
+      "phone": "1234567890",
+      "fkid_municipality": "1",
+      "status_driver": "activo",
+      "created_at": "2023-01-01T00:00:00Z",
+      "updated_at": "2023-01-01T00:00:00Z",
+      "id": "31"
+    },
+    {
+      "id_driver": "2",
+      "name_driver": "Mark",
+      "lastname_driver": "Brown",
+      "phone": "2345678901",
+      "fkid_municipality": "2",
+      "status_driver": "activo",
+      "created_at": "2023-01-02T00:00:00Z",
+      "updated_at": "2023-01-02T00:00:00Z",
+      "id": "778"
+    },
+    {
+      "id_driver": "3",
+      "name_driver": "Emily",
+      "lastname_driver": "Davis",
+      "phone": "3456789012",
+      "fkid_municipality": "3",
+      "status_driver": "inactivo",
+      "created_at": "2023-01-03T00:00:00Z",
+      "updated_at": "2023-01-03T00:00:00Z",
+      "id": "204"
+    }
+  ],
+  "license": [
+    {
+      "id_nro_license": "ABC123",
+      "degree": "A",
+      "emission_date": "2020-01-01",
+      "expiration_date": "2025-01-01",
+      "sex": "F",
+      "id_driver": "1",
+      "id": "9"
+    },
+    {
+      "id_nro_license": "XYZ456",
+      "degree": "B",
+      "emission_date": "2021-01-01",
+      "expiration_date": "2026-01-01",
+      "sex": "M",
+      "id_driver": "2",
+      "id": "835"
+    },
+    {
+      "id_nro_license": "LMN789",
+      "degree": "C",
+      "emission_date": "2022-01-01",
+      "expiration_date": "2027-01-01",
+      "sex": "F",
+      "id_driver": "3",
+      "id": "398"
+    }
+  ],
+  "client": [
+    {
+      "id": "1731805643501",
+      "id_client": "30782050",
+      "name_client": "Yoangel",
+      "lastname_client": "Godoy",
+      "fkid_municipality": "8",
+      "phone": "04147287332",
+      "created_at": "2024-11-17T01:07:23.501Z",
+      "updated_at": "2024-11-17T01:10:54.316Z"
+    }
+  ],
+  "tow_truck": [
+    {
+      "id": "1731805967597",
+      "tuition": "22RTAG",
+      "model": "FORD",
+      "type_towtruck": "plataforma",
+      "status": "activo",
+      "created_at": "2024-11-17T01:12:47.597Z",
+      "updated_at": "2024-11-17T01:12:47.597Z"
+    },
+    {
+      "id": "1731806124173",
+      "tuition": "77RTY9",
+      "model": "FORD",
+      "type_towtruck": "gancho",
+      "status": "inactivo",
+      "created_at": "2024-11-17T01:15:24.173Z",
+      "updated_at": "2024-11-17T01:15:24.173Z"
+    }
+  ],
+  "model": [
+    {
+      "id_model": "1",
+      "name_model": "Ford F-150",
+      "capacity_model": "10000",
+      "year_of_manufacture": "2020",
+      "fkid_mark": "1",
+      "id": "1"
+    },
+    {
+      "id_model": "2",
+      "name_model": "Chevrolet Silverado",
+      "capacity_model": "12000",
+      "year_of_manufacture": "2021",
+      "fkid_mark": "2",
+      "id": "801"
+    },
+    {
+      "id_model": "3",
+      "name_model": "Ram 1500",
+      "capacity_model": "11000",
+      "year_of_manufacture": "2022",
+      "fkid_mark": "3",
+      "id": "7"
+    }
+  ],
+  "mark": [
+    {
+      "id_mark": "1",
+      "name_mark": "Ford",
+      "id": "95"
+    },
+    {
+      "id_mark": "2",
+      "name_mark": "Chevrolet",
+      "id": "8"
+    },
+    {
+      "id_mark": "3",
+      "name_mark": "Ram",
+      "id": "1"
+    }
+  ],
+  "towing_service": [
+    {
+      "id_service": "1",
+      "fkid_client": "1",
+      "fkid_driver": "1",
+      "fkid_tow_truck": "TT001",
+      "date": "2023-01-02",
+      "cost": "150",
+      "fktype_of_vehicle": "1",
+      "status_service": "completed",
+      "description": "Towed vehicle from highway",
+      "id": "2"
+    },
+    {
+      "id_service": "2",
+      "fkid_client": "2",
+      "fkid_driver": "2",
+      "fkid_tow_truck": "TT002",
+      "date": "2023-01-03",
+      "cost": "200",
+      "fktype_of_vehicle": "2",
+      "status_service": "completed",
+      "description": "Towed vehicle from highway",
+      "id": "3"
+    },
+    {
+      "id_service": "3",
+      "fkid_client": "3",
+      "fkid_driver": "3",
+      "fkid_tow_truck": "TT003",
+      "date": "2023-01-04",
+      "cost": "250",
+      "fktype_of_vehicle": "1",
+      "status_service": "pending",
+      "description": "Towed vehicle from garage",
+      "id": "4"
+    }
+  ],
+  "type_vehicle": [
+    {
+      "id_type_vehicle": "1",
+      "type_of_vehicle": "car",
+      "id": "6"
+    },
+    {
+      "id_type_vehicle": "2",
+      "type_of_vehicle": "truck",
+      "id": "96"
+    },
+    {
+      "id_type_vehicle": "3",
+      "type_of_vehicle": "motorcycle",
+      "id": "545"
+    }
+  ],
+  "driver_payment": [
+    {
+      "id_payment": "1",
+      "fkid_driver": "1",
+      "payment_date": "2023-01-10",
+      "amount": "200",
+      "description": "Monthly payment",
+      "id": "3"
+    },
+    {
+      "id_payment": "2",
+      "fkid_driver": "2",
+      "payment_date": "2023-01-11",
+      "amount": "250",
+      "description": "Monthly payment",
+      "id": "6"
+    },
+    {
+      "id_payment": "3",
+      "fkid_driver": "3",
+      "payment_date": "2023-01-12",
+      "amount": "150",
+      "description": "Monthly payment",
+      "id": "3"
+    }
+  ],
+  "client_payment": [
+    {
+      "id_payment": "1",
+      "fkid_client": "1",
+      "fkid_service": "1",
+      "payment_date": "2023-01-05",
+      "payment_status": "completed",
+      "payment_method": "credit card",
+      "amount": "150",
+      "description": "Payment for towing service",
+      "id": "8"
+    },
+    {
+      "id_payment": "2",
+      "fkid_client": "2",
+      "fkid_service": "2",
+      "payment_date": "2023-01-06",
+      "payment_status": "completed",
+      "payment_method": "cash",
+      "amount": "200",
+      "description": "Payment for towing service",
+      "id": "1"
+    },
+    {
+      "id_payment": "3",
+      "fkid_client": "3",
+      "fkid_service": "3",
+      "payment_date": "2023-01-07",
+      "payment_status": "pending",
+      "payment_method": "bank transfer",
+      "amount": "250",
+      "description": "Payment for towing service",
+      "id": "2"
+    }
+  ],
+  "invoice": [
+    {
+      "id_invoice": "1",
+      "fkid_client_payment": "1",
+      "issue_date": "2023-01-06",
+      "total_amount": "150",
+      "description": "Invoice for towing service",
+      "id": "1"
+    },
+    {
+      "id_invoice": "2",
+      "fkid_client_payment": "2",
+      "issue_date": "2023-01-07",
+      "total_amount": "200",
+      "description": "Invoice for towing service",
+      "id": "2"
+    },
+    {
+      "id_invoice": "3",
+      "fkid_client_payment": "3",
+      "issue_date": "2023-01-08",
+      "total_amount": "250",
+      "description": "Invoice for towing service",
+      "id": "3"
+    }
+  ]
+}
