@@ -15,7 +15,7 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilLockLocked, cilUser  } from '@coreui/icons';
-import '../../../scss/style.scss';
+import '../../../scss/_custom.scss';
 import { helpFetch } from '../../../components/helpers/helpFetch';
 
 const api = helpFetch();
@@ -26,7 +26,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  // Check if user is already logged in
+  
   useEffect(() => {
     const loggedInUser  = localStorage.getItem('user');
     if (loggedInUser ) {
@@ -34,7 +34,7 @@ const Login = () => {
     }
   }, [navigate]);
 
-  // Handle login form submission
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMessage('');
@@ -116,7 +116,6 @@ const Login = () => {
   );
 };
 
-// InputGroup component for reusability
 const InputGroup = ({ icon, placeholder, value, onChange, type = 'text' }) => (
   <CInputGroup className="mb-3">
     <CInputGroupText>

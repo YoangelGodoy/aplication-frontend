@@ -18,6 +18,15 @@
       "phone": "04247217680",
       "email": "deisychacondegodoy@gmail.com",
       "password": "1234"
+    },
+    {
+      "id": "1731855922396",
+      "idCard": "14605801",
+      "name": "Yoan",
+      "lastName": "Godoy",
+      "phone": "04147287332",
+      "email": "Wyoangt@hotmail.com",
+      "password": "1234"
     }
   ],
   "rol_user": [
@@ -288,6 +297,17 @@
       "status_driver": "",
       "created_at": "2024-11-17T05:44:21.022Z",
       "updated_at": "2024-11-17T05:44:21.022Z"
+    },
+    {
+      "id": "1731852897014",
+      "id_driver": "16258455",
+      "name_driver": "Noelia",
+      "lastname_driver": "Godoy",
+      "phone": "04247217680",
+      "fkid_municipality": "9",
+      "status_driver": "",
+      "created_at": "2024-11-17T14:14:57.014Z",
+      "updated_at": "2024-11-17T14:14:57.014Z"
     }
   ],
   "license": [],
