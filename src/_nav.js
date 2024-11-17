@@ -69,12 +69,6 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Lista de Choferes',
-        to:'/drivers/list',
-        icon: <CIcon icon={cilList} customClassName="nav-icon" />,
-      },
-      {
-        component: CNavItem,
         name: 'Licencias',
         to:'/drivers/add_license',
         icon: <CIcon icon={cilCreditCard} customClassName="nav-icon" />,

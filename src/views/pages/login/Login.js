@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   CButton,
   CCard,
@@ -12,41 +12,81 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
+} from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilLockLocked, cilUser  } from '@coreui/icons';
+import '../../../scss/style.scss';
+import { helpFetch } from '../../../components/helpers/helpFetch';
+
+const api = helpFetch();
 
 const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const loggedInUser  = localStorage.getItem('user');
+    if (loggedInUser ) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
+
+  // Handle login form submission
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setErrorMessage('');
+
+    try {
+      const usersRes = await api.get("users");
+
+      if (!usersRes.err) {
+        const user = usersRes.find(user => user.name === username && user.password === password);
+
+        if (user) {
+          console.log('Login successful:', user);
+          localStorage.setItem('user', JSON.stringify(user));
+          navigate('/dashboard');
+        } else {
+          setErrorMessage('Invalid username or password');
+        }
+      } else {
+        setErrorMessage('Error fetching user data');
+      }
+    } catch (error) {
+      setErrorMessage('An unexpected error occurred.');
+    }
+  };
+
   return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
+    <div className="login-background d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={8}>
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm onSubmit={handleLogin}>
                     <h1>Login</h1>
                     <p className="text-body-secondary">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="current-password"
-                      />
-                    </CInputGroup>
+                    <InputGroup
+                      icon={cilUser }
+                      placeholder="Username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <InputGroup
+                      icon={cilLockLocked}
+                      type="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
                     <CRow>
                       <CCol xs={6}>
-                        <CButton id="login" color="primary" className="px-4">
+                        <CButton type='submit' id="login" color="primary" className="px-4" style={{ backgroundColor: '#003c7c', border: 'none' }} >
                           Login
                         </CButton>
                       </CCol>
@@ -56,22 +96,15 @@ const Login = () => {
                         </CButton>
                       </CCol>
                     </CRow>
+                    {errorMessage && <p className="text-danger">{errorMessage}</p>}
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
+              <CCard className="text-white" style={{ backgroundColor: '#003c7c', width: '44%', border: 'none' }}>
                 <CCardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton id="register" color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
+            
+                    
                   </div>
                 </CCardBody>
               </CCard>
@@ -80,7 +113,23 @@ const Login = () => {
         </CRow>
       </CContainer>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+// InputGroup component for reusability
+const InputGroup = ({ icon, placeholder, value, onChange, type = 'text' }) => (
+  <CInputGroup className="mb-3">
+    <CInputGroupText>
+      <CIcon icon={icon} />
+    </CInputGroupText>
+    <CFormInput
+      type={type}
+      placeholder={placeholder}
+      autoComplete={type === 'password' ? 'current-password ' : 'username'}
+      value={value}
+      onChange={onChange}
+    />
+  </CInputGroup>
+);
+
+export default Login;

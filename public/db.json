@@ -1,20 +1,23 @@
 {
   "users": [
     {
-      "id": "1731793843010",
+      "id": "1731817388656",
       "idCard": "30782050",
-      "name": "yoangel ",
+      "name": "Yoangel",
       "lastName": "Godoy",
-      "phone": "123123",
-      "address": "Michelena"
+      "phone": "04147287332",
+      "email": "yoangelagodoych201104@gmail.com",
+      "password": "123",
+      "updated_at": "2024-11-17T04:24:01.584Z"
     },
     {
+      "id": "1731817435672",
       "idCard": "16258455",
       "name": "Noelia",
       "lastName": "Chacon",
-      "phone": "04126458932",
-      "address": "San Cristobal",
-      "id": "1731793906075"
+      "phone": "04247217680",
+      "email": "deisychacondegodoy@gmail.com",
+      "password": "1234"
     }
   ],
   "rol_user": [
@@ -265,68 +268,29 @@
   ],
   "driver": [
     {
-      "id_driver": "1",
-      "name_driver": "Jane",
-      "lastname_driver": "Smith",
-      "phone": "1234567890",
-      "fkid_municipality": "1",
-      "status_driver": "activo",
-      "created_at": "2023-01-01T00:00:00Z",
-      "updated_at": "2023-01-01T00:00:00Z",
-      "id": "31"
-    },
-    {
       "id_driver": "2",
       "name_driver": "Mark",
-      "lastname_driver": "Brown",
+      "lastname_driver": "Chacon",
       "phone": "2345678901",
-      "fkid_municipality": "2",
+      "fkid_municipality": "1",
       "status_driver": "activo",
       "created_at": "2023-01-02T00:00:00Z",
-      "updated_at": "2023-01-02T00:00:00Z",
+      "updated_at": "2024-11-17T05:32:38.854Z",
       "id": "778"
     },
     {
-      "id_driver": "3",
-      "name_driver": "Emily",
-      "lastname_driver": "Davis",
-      "phone": "3456789012",
-      "fkid_municipality": "3",
-      "status_driver": "inactivo",
-      "created_at": "2023-01-03T00:00:00Z",
-      "updated_at": "2023-01-03T00:00:00Z",
-      "id": "204"
+      "id": "1731822261022",
+      "id_driver": "30782050",
+      "name_driver": "Yoangel",
+      "lastname_driver": "Godoy",
+      "phone": "04147287332",
+      "fkid_municipality": "10",
+      "status_driver": "",
+      "created_at": "2024-11-17T05:44:21.022Z",
+      "updated_at": "2024-11-17T05:44:21.022Z"
     }
   ],
-  "license": [
-    {
-      "id_nro_license": "ABC123",
-      "degree": "A",
-      "emission_date": "2020-01-01",
-      "expiration_date": "2025-01-01",
-      "sex": "F",
-      "id_driver": "1",
-      "id": "9"
-    },
-    {
-      "id_nro_license": "XYZ456",
-      "degree": "B",
-      "emission_date": "2021-01-01",
-      "expiration_date": "2026-01-01",
-      "sex": "M",
-      "id_driver": "2",
-      "id": "835"
-    },
-    {
-      "id_nro_license": "LMN789",
-      "degree": "C",
-      "emission_date": "2022-01-01",
-      "expiration_date": "2027-01-01",
-      "sex": "F",
-      "id_driver": "3",
-      "id": "398"
-    }
-  ],
+  "license": [],
   "client": [
     {
       "id": "1731805643501",

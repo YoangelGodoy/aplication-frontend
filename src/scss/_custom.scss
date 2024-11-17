@@ -71,6 +71,16 @@
 .table td, .table th {
     padding: 0.2rem; /* Ajusta el valor según sea necesario */
   }
+
+.login-background {
+    background-image: url("/src/assets/images/fondo2.jpg"); /* Cambia esto por la ruta de tu imagen */
+    background-size: cover; /* Asegúrate de que la imagen cubra todo el contenedor */
+    background-position: center; /* Centra la imagen */
+    height: 100vh; /* Asegúrate de que el contenedor ocupe toda la altura de la ventana */
+}
+/* .login-right{
+    background-color: red !important;
+} */
 // #img1{
 //     margin-right: 10px;
 // }
