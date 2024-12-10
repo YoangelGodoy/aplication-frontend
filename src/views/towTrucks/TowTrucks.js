@@ -18,13 +18,15 @@ import {
   CTableDataCell
 } from '@coreui/react';
 import { CIcon } from '@coreui/icons-react'; 
-import { cilHistory, cilTrash } from '@coreui/icons'; 
+import { cilPencil, cilTrash } from '@coreui/icons'; 
 import { helpFetch } from '/src/components/helpers/helpFetch'; 
 
 const GTowTrucks = () => {
   const api = helpFetch();
   const [towTrucks, setTowTrucks] = useState([]);
   const [updateData, setUpdateData] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
+  const [TowToDelete, setTowTrucksToDelete] = useState(null); 
 
   
   useEffect(() => {
@@ -103,15 +105,27 @@ const GTowTrucks = () => {
     }
   };
 
-  const deleteTowTruck = async (id) => {
-    const confirmDelete = window.confirm(`¿Deseas eliminar la grúa con matrícula: ${id}?`);
-    if (confirmDelete) {
-      const response = await api.delet("tow_truck", id); 
-      if (!response.error) {
-        const newTowTrucks = towTrucks.filter(el => el.id !== id);
-        setTowTrucks(newTowTrucks);
-      }
+  const deleteTowTruck = (id) => {
+    setTowTrucksToDelete(id); // Guarda el id del cliente a eliminar
+    setModalVisible(true); // Muestra el modal
+  };
+
+  const confirmDelete = () => {
+    if (TowToDelete) {
+      api.delet("tow_truck", TowToDelete).then((response) => {
+        if (!response.error) {
+          const newTowTrucks = towTrucks.filter(el => el.id !== String(TowToDelete));
+          setTowTrucks(newTowTrucks);
+        }
+      });
     }
+    setModalVisible(false); // Cierra el modal
+    setTowTrucksToDelete(null); // Resetea el cliente a eliminar
+  };
+
+  const cancelDelete = () => {
+    setModalVisible(false); // Cierra el modal sin hacer nada
+    setTowTrucksToDelete(null); // Resetea el cliente a eliminar
   };
 
   const handleCancel = () => {
@@ -233,7 +247,7 @@ const GTowTrucks = () => {
                         <CTableDataCell>{new Date(towtruck.created_at).toLocaleDateString()}</CTableDataCell>
                         <CTableDataCell>
                           <CButton className="update" onClick={() => setUpdateData(towtruck)}>
-                            <CIcon icon={cilHistory} />
+                            <CIcon icon={cilPencil} />
                           </CButton>
                           <CButton className="delete" onClick={() => deleteTowTruck(towtruck.id)}>
                             <CIcon icon={cilTrash} />
@@ -248,6 +262,23 @@ const GTowTrucks = () => {
           </CCard>
         </ CCol>
       </CRow>
+      <div className={`modal ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1">
+        <div className="modal-dialog modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Confirmar Eliminación</h5>
+              <button type="button" className="btn-close" onClick={cancelDelete} aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <p>¿Estás seguro de que deseas eliminar este registro?</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" onClick={cancelDelete}>Cancelar</button>
+              <button type="button" className="btn btn-danger" id="ConfirmDelete" onClick={confirmDelete}>Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </CContainer>
   );
 };

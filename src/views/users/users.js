@@ -18,12 +18,14 @@ import {
   CTableDataCell
 } from '@coreui/react';
 import { CIcon } from '@coreui/icons-react'; 
-import { cilHistory, cilTrash } from '@coreui/icons'; 
+import { cilPencil, cilTrash } from '@coreui/icons'; 
 
 const AUsers = () => {
   const api = helpFetch();
   const [updateData, setUpdateData] = useState(null);
   const [users, setUsers] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
+  const [userToDelete, setUsersToDelete] = useState(null); 
 
   useEffect(() => {
     api.get("users").then((response) => {
@@ -51,17 +53,27 @@ const AUsers = () => {
     });
   };
 
-  const deleteUser  = (id) => {
-    const confirmDelete = window.confirm(`¿Deseas eliminar el registro con id: ${id}?`);
+  const deleteUser = (id) => {
+    setUsersToDelete(id); // Guarda el id del cliente a eliminar
+    setModalVisible(true); // Muestra el modal
+  };
 
-    if (confirmDelete) {
-      api.delet("users", id).then((response) => {
+  const confirmDelete = () => {
+    if (userToDelete) {
+      api.delet("users", userToDelete).then((response) => {
         if (!response.error) {
-          const newUsers = users.filter(el => el.id !== String(id));
+          const newUsers = users.filter(el => el.id !== String(userToDelete));
           setUsers(newUsers);
         }
       });
     }
+    setModalVisible(false); // Cierra el modal
+    setUsersToDelete(null); // Resetea el cliente a eliminar
+  };
+
+  const cancelDelete = () => {
+    setModalVisible(false); // Cierra el modal sin hacer nada
+    setUsersToDelete(null); // Resetea el cliente a eliminar
   };
 
   const [formData, setFormData] = useState({
@@ -230,7 +242,6 @@ const AUsers = () => {
                     <CTableHeaderCell>Nombre</CTableHeaderCell>
                     <CTableHeaderCell>Apellido</CTableHeaderCell>
                     <CTableHeaderCell>Teléfono</CTableHeaderCell>
-                    <CTableHeaderCell>Contraseña</CTableHeaderCell>
                     <CTableHeaderCell>Correo Electrónico</CTableHeaderCell>
                     <CTableHeaderCell></CTableHeaderCell>
                   </CTableRow>
@@ -247,11 +258,10 @@ const AUsers = () => {
                         <CTableDataCell>{user.name}</CTableDataCell>
                         <CTableDataCell>{user.lastName}</CTableDataCell>
                         <CTableDataCell>{user.phone}</CTableDataCell>
-                        <CTableDataCell>{user.password}</CTableDataCell>
                         <CTableDataCell>{user.email}</CTableDataCell>
                         <CTableDataCell>
                           <CButton className="update" onClick={() => setUpdateData(user)}>
-                            <CIcon icon={cilHistory} />
+                            <CIcon icon={cilPencil} />
                           </CButton>
                           <CButton className="delete" onClick={() => deleteUser (user.id)}>
                             <CIcon icon={cilTrash} />
@@ -266,6 +276,23 @@ const AUsers = () => {
           </CCard>
         </CCol>
       </CRow>
+      <div className={`modal ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1">
+        <div className="modal-dialog modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Confirmar Eliminación</h5>
+              <button type="button" className="btn-close" onClick={cancelDelete} aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <p>¿Estás seguro de que deseas eliminar este registro?</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" onClick={cancelDelete}>Cancelar</button>
+              <button type="button" className="btn btn-danger" id="ConfirmDelete" onClick={confirmDelete}>Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </CContainer>
   );
 };

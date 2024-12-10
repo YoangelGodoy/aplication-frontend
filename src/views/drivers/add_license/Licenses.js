@@ -57,15 +57,8 @@ function Licenses() {
     }
   }, [updateData]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (updateData) {
-      updateLicense(formData);
-    } else {
-      addLicense(formData);
-    }
-  };
 
+/////////////////////////////////////////
   const addLicense = (data) => {
     const options = { body: data };
     api.post("license", options).then((response) => {
@@ -99,6 +92,15 @@ function Licenses() {
     }
   };
 
+  ///////////////////////////////
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (updateData) {
+      updateLicense(formData);
+    } else {
+      addLicense(formData);
+    }
+  };
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -117,7 +119,7 @@ function Licenses() {
     });
     setUpdateData(null);
   };
-
+/////////////////////////////////
   return (
     <CRow>
       <CCol>
@@ -151,7 +153,7 @@ function Licenses() {
                   >
                     <option value="">Seleccione...</option>
                     {drivers.map(driver => (
-                      <option key={driver.id_driver} value={driver.id_driver}>{driver.id_driver}</option>
+                      <option key={driver.id} value={driver.id_driver}>{driver.id_driver}</option>
                     ))}
                   </CFormSelect>
                 </CCol>

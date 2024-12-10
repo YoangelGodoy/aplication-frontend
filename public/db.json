@@ -9,24 +9,6 @@
       "email": "yoangelagodoych201104@gmail.com",
       "password": "123",
       "updated_at": "2024-11-17T04:24:01.584Z"
-    },
-    {
-      "id": "1731817435672",
-      "idCard": "16258455",
-      "name": "Noelia",
-      "lastName": "Chacon",
-      "phone": "04247217680",
-      "email": "deisychacondegodoy@gmail.com",
-      "password": "1234"
-    },
-    {
-      "id": "1731855922396",
-      "idCard": "14605801",
-      "name": "Yoan",
-      "lastName": "Godoy",
-      "phone": "04147287332",
-      "email": "Wyoangt@hotmail.com",
-      "password": "1234"
     }
   ],
   "rol_user": [
@@ -293,10 +275,10 @@
       "name_driver": "Yoangel",
       "lastname_driver": "Godoy",
       "phone": "04147287332",
-      "fkid_municipality": "10",
-      "status_driver": "",
+      "fkid_municipality": "16",
+      "status_driver": "activo",
       "created_at": "2024-11-17T05:44:21.022Z",
-      "updated_at": "2024-11-17T05:44:21.022Z"
+      "updated_at": "2024-11-20T02:16:28.446Z"
     },
     {
       "id": "1731852897014",
@@ -305,22 +287,54 @@
       "lastname_driver": "Godoy",
       "phone": "04247217680",
       "fkid_municipality": "9",
-      "status_driver": "",
+      "status_driver": "activo",
       "created_at": "2024-11-17T14:14:57.014Z",
-      "updated_at": "2024-11-17T14:14:57.014Z"
+      "updated_at": "2024-11-20T02:16:32.182Z"
+    },
+    {
+      "id": "1732070653617",
+      "id_driver": "30782050",
+      "name_driver": "Yoangel",
+      "lastname_driver": "Chacon",
+      "phone": "04147287332",
+      "fkid_municipality": "15",
+      "status_driver": "",
+      "created_at": "2024-11-20T02:44:13.617Z",
+      "updated_at": "2024-11-20T02:44:13.617Z"
+    },
+    {
+      "id": "1732070678120",
+      "id_driver": "16258455",
+      "name_driver": "Yoangel",
+      "lastname_driver": "Chacon",
+      "phone": "04127584461",
+      "fkid_municipality": "13",
+      "status_driver": "",
+      "created_at": "2024-11-20T02:44:38.120Z",
+      "updated_at": "2024-11-20T02:44:38.120Z"
     }
   ],
-  "license": [],
+  "license": [
+    {
+      "id": "41c6",
+      "number": "1",
+      "idCard": "30782050",
+      "degree": "5ta",
+      "sex": "Masculino",
+      "emission": "2024-11-06",
+      "expiration": "2024-11-21"
+    }
+  ],
   "client": [
     {
-      "id": "1731805643501",
-      "id_client": "30782050",
-      "name_client": "Yoangel",
-      "lastname_client": "Godoy",
-      "fkid_municipality": "8",
-      "phone": "04147287332",
-      "created_at": "2024-11-17T01:07:23.501Z",
-      "updated_at": "2024-11-17T01:10:54.316Z"
+      "id": "1732924423307",
+      "id_client": "32308651",
+      "name_client": "Yoan",
+      "lastname_client": "Williams",
+      "fkid_municipality": "9",
+      "phone": "04126458932",
+      "created_at": "2024-11-29T23:53:43.307Z",
+      "updated_at": "2024-11-29T23:53:43.307Z"
     }
   ],
   "tow_truck": [
@@ -332,15 +346,6 @@
       "status": "activo",
       "created_at": "2024-11-17T01:12:47.597Z",
       "updated_at": "2024-11-17T01:12:47.597Z"
-    },
-    {
-      "id": "1731806124173",
-      "tuition": "77RTY9",
-      "model": "FORD",
-      "type_towtruck": "gancho",
-      "status": "inactivo",
-      "created_at": "2024-11-17T01:15:24.173Z",
-      "updated_at": "2024-11-17T01:15:24.173Z"
     }
   ],
   "model": [

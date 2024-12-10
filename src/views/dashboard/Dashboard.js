@@ -45,8 +45,6 @@ const IntegratedDashboard = () => {
 
   }
 
-
-
   return (
     <CRow>
       <CCol xs={12}>

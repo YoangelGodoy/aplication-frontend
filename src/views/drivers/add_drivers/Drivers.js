@@ -19,7 +19,7 @@ import {
   CFormSelect
 } from '@coreui/react';
 import { CIcon } from '@coreui/icons-react'; 
-import { cilHistory, cilTrash } from '@coreui/icons'; 
+import { cilPencil, cilTrash } from '@coreui/icons'; 
 
 const ADrivers = () => {
   const api = helpFetch();
@@ -28,6 +28,9 @@ const ADrivers = () => {
   const [states, setStates] = useState([]); 
   const [municipalities, setMunicipalities] = useState([]); 
   const [filteredMunicipalities, setFilteredMunicipalities] = useState([]); 
+  const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
+  const [driverToDelete, setDriverToDelete] = useState(null); 
+
 
   useEffect(() => {
     // Fetch drivers
@@ -75,16 +78,26 @@ const ADrivers = () => {
   };
 
   const deleteDriver = (id) => {
-    const confirmDelete = window.confirm(`¿Deseas eliminar el registro con id: ${id}?`);
+    setDriverToDelete(id); // Guarda el id del cliente a eliminar
+    setModalVisible(true); // Muestra el modal
+  };
 
-    if (confirmDelete) {
-      api.delet("driver", id).then((response) => {
+  const confirmDelete = () => {
+    if (driverToDelete) {
+      api.delet("driver", driverToDelete).then((response) => {
         if (!response.error) {
-          const newDrivers = drivers.filter(el => el.id !== String(id));
+          const newDrivers = drivers.filter(el => el.id !== String(driverToDelete));
           setDrivers(newDrivers);
         }
       });
     }
+    setModalVisible(false); // Cierra el modal
+    setDriverToDelete(null); // Resetea el cliente a eliminar
+  };
+
+  const cancelDelete = () => {
+    setModalVisible(false); // Cierra el modal sin hacer nada
+    setDriverToDelete(null); // Resetea el cliente a eliminar
   };
 
   const [formData, setFormData] = useState({
@@ -329,7 +342,7 @@ const ADrivers = () => {
                         <CTableDataCell>{new Date(driver.created_at).toLocaleDateString()}</CTableDataCell>
                         <CTableDataCell>
                           <CButton className="update" onClick={() => setUpdateData(driver)}>
-                            <CIcon icon={cilHistory} />
+                            <CIcon icon={cilPencil} />
                           </CButton>
                           <CButton className="delete" onClick={() => deleteDriver(driver.id)}>
                             <CIcon icon={cilTrash} />
@@ -344,6 +357,23 @@ const ADrivers = () => {
           </CCard>
         </CCol>
       </CRow>
+      <div className={`modal ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1">
+        <div className="modal-dialog modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Confirmar Eliminación</h5>
+              <button type="button" className="btn-close" onClick={cancelDelete} aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <p>¿Estás seguro de que deseas eliminar este registro?</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" onClick={cancelDelete}>Cancelar</button>
+              <button type="button" className="btn btn-danger" id="ConfirmDelete" onClick={confirmDelete}>Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </CContainer>
   );
 };

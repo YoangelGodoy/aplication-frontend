@@ -19,7 +19,8 @@ import {
   CFormSelect
 } from '@coreui/react';
 import { CIcon } from '@coreui/icons-react'; 
-import { cilHistory, cilTrash } from '@coreui/icons'; 
+import { cilPencil, cilTrash } from '@coreui/icons'; 
+import '../../scss/_custom.scss'
 
 const AClients = () => {
   const api = helpFetch();
@@ -28,24 +29,25 @@ const AClients = () => {
   const [states, setStates] = useState([]); 
   const [municipalities, setMunicipalities] = useState([]); 
   const [filteredMunicipalities, setFilteredMunicipalities] = useState([]); 
+  const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
+  const [clientToDelete, setClientToDelete] = useState(null); 
 
-  
+//////////////////////////////////////////////  
   useEffect(() => {
-    api.get("client").then((response) => {
+    const fetchclients = async () => {
+      const response = await api.get("client");
       if (!response.error) setClients(response);
-    });
+    };
 
-    
+    fetchclients();
+
     const fetchStates = async () => {
       const response = await api.get("state"); 
       if (!response.error) setStates(response);
     };
 
     fetchStates();
-  }, []);
 
-
-  useEffect(() => {
     const fetchMunicipalities = async () => {
       const response = await api.get("municipality"); 
       if (!response.error) setMunicipalities(response);
@@ -54,9 +56,11 @@ const AClients = () => {
     fetchMunicipalities();
   }, []);
 
+//////////////////////////////////////////////
+
   const addClient = (add) => {
     const options = { body: add };
-
+    
     api.post("client", options).then((response) => {
       if (!response.error) setClients([...clients, response]);
     });
@@ -75,16 +79,26 @@ const AClients = () => {
   };
 
   const deleteClient = (id) => {
-    const confirmDelete = window.confirm(`¿Deseas eliminar el registro con id: ${id}?`);
+    setClientToDelete(id); // Guarda el id del cliente a eliminar
+    setModalVisible(true); // Muestra el modal
+  };
 
-    if (confirmDelete) {
-      api.delet("client", id).then((response) => {
+  const confirmDelete = () => {
+    if (clientToDelete) {
+      api.delet("client", clientToDelete).then((response) => {
         if (!response.error) {
-          const newClients = clients.filter(el => el.id !== String(id));
+          const newClients = clients.filter(el => el.id !== String(clientToDelete));
           setClients(newClients);
         }
       });
     }
+    setModalVisible(false); // Cierra el modal
+    setClientToDelete(null); // Resetea el cliente a eliminar
+  };
+
+  const cancelDelete = () => {
+    setModalVisible(false); // Cierra el modal sin hacer nada
+    setClientToDelete(null); // Resetea el cliente a eliminar
   };
 
   const [formData, setFormData] = useState({
@@ -123,6 +137,7 @@ const AClients = () => {
     }
   }, [updateData, municipalities]);
 
+  ////////////////////////////////////////////
   const handleSubmit = (e) => {
     e.preventDefault();
     if (updateData != null) {
@@ -174,7 +189,7 @@ const AClients = () => {
     setUpdateData(null);
     setFilteredMunicipalities([]); 
   };
-
+  ///////////////////////////////////////////////////////
  
   const municipalityMap = municipalities.reduce((acc, municipality) => {
     acc[municipality.id_municipality] = municipality.name;
@@ -321,7 +336,7 @@ const AClients = () => {
                         <CTableDataCell>{new Date(client.created_at).toLocaleDateString()}</CTableDataCell>
                         <CTableDataCell>
                           <CButton className="update" onClick={() => setUpdateData(client)}>
-                            <CIcon icon={cilHistory} />
+                            <CIcon icon={cilPencil} />  
                           </CButton>
                           <CButton className="delete" onClick={() => deleteClient(client.id)}>
                             <CIcon icon={cilTrash} />
@@ -336,6 +351,23 @@ const AClients = () => {
           </CCard>
         </CCol>
       </CRow>
+      <div className={`modal ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1">
+        <div className="modal-dialog modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Confirmar Eliminación</h5>
+              <button type="button" className="btn-close" onClick={cancelDelete} aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <p>¿Estás seguro de que deseas eliminar este registro?</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" onClick={cancelDelete}>Cancelar</button>
+              <button type="button" className="btn btn-danger" id="ConfirmDelete" onClick={confirmDelete}>Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </CContainer>
   );
 };
