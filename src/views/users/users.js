@@ -18,14 +18,16 @@ import {
   CTableDataCell
 } from '@coreui/react';
 import { CIcon } from '@coreui/icons-react'; 
-import { cilPencil, cilTrash } from '@coreui/icons'; 
+import { cilPencil, cilTrash, cilUserPlus, cilSearch} from '@coreui/icons'; 
 
 const AUsers = () => {
   const api = helpFetch();
   const [updateData, setUpdateData] = useState(null);
   const [users, setUsers] = useState([]);
   const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
+  const [modalVisible2, setModalVisible2] = useState(false); // Estado para el modal de eliminación
   const [userToDelete, setUsersToDelete] = useState(null); 
+  const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
 
   useEffect(() => {
     api.get("users").then((response) => {
@@ -53,9 +55,9 @@ const AUsers = () => {
     });
   };
 
-  const deleteUser = (id) => {
+  const deleteUser  = (id) => {
     setUsersToDelete(id); // Guarda el id del cliente a eliminar
-    setModalVisible(true); // Muestra el modal
+    setModalVisible2(true); // Muestra el modal de eliminación
   };
 
   const confirmDelete = () => {
@@ -67,12 +69,12 @@ const AUsers = () => {
         }
       });
     }
-    setModalVisible(false); // Cierra el modal
+    setModalVisible2(false); // Cierra el modal de eliminación
     setUsersToDelete(null); // Resetea el cliente a eliminar
   };
 
   const cancelDelete = () => {
-    setModalVisible(false); // Cierra el modal sin hacer nada
+    setModalVisible2(false); // Cierra el modal de eliminación sin hacer nada
     setUsersToDelete(null); // Resetea el cliente a eliminar
   };
 
@@ -103,6 +105,7 @@ const AUsers = () => {
       addUser (formData);
       resetForm();
     }
+    setModalVisible(false); // Cierra el modal después de agregar o actualizar
   };
 
   const handleChange = (e) => {
@@ -114,6 +117,7 @@ const AUsers = () => {
 
   const handleCancel = () => {
     resetForm();
+    setModalVisible(false); // Cierra el modal al cancelar
   };
 
   const resetForm = () => {
@@ -129,15 +133,105 @@ const AUsers = () => {
     setUpdateData(null);
   };
 
+  // Filtrar usuarios por cédula y nombre
+  const filteredUsers = users.filter(user => {
+    return (
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.idCard.includes(searchTerm)
+    );
+  });
+
   return (
     <CContainer>
+      <CCard>
+        <CCardHeader>
+          <h2>Lista de Usuarios</h2>
+        </CCardHeader>
+      </CCard>
       <CRow>
         <CCol>
           <CCard className='mb-4'>
-            <CCardHeader>
-              <h2>{updateData ? "Actualizar Usuario" : "Registrar Nuevo Usuario"}</h2>
-            </CCardHeader>
+            <CCardHeader style={{display:"flex", alignItems:"center"}}>
+                <CIcon icon={cilSearch}/>
+                  <CFormInput
+                    type="text"
+                    placeholder = "Buscar por cédula o nombre..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{ width: '300px', marginLeft:"10px",marginRight:"600px"}} // Ajusta el ancho según sea necesario
+                  />
+                  <CButton color="primary" onClick={() => setModalVisible(true)}>
+                    <CIcon icon={cilUserPlus} />
+                  </CButton>
+              </CCardHeader>
             <CCardBody>
+              <CTable hover responsive>
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell>Cédula</CTableHeaderCell>
+                    <CTableHeaderCell>Nombre</CTableHeaderCell>
+                    <CTableHeaderCell>Apellido</CTableHeaderCell>
+                    <CTableHeaderCell>Teléfono</CTableHeaderCell>
+                    <CTableHeaderCell>Correo Electrónico</CTableHeaderCell>
+                    <CTableHeaderCell></CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                  {filteredUsers.length === 0 ? (
+                    <CTableRow>
+                      <CTableDataCell colSpan="7">No hay datos</CTableDataCell>
+                    </CTableRow>
+                  ) : (
+                    filteredUsers.map((user) => (
+                      <CTableRow key={user.id}>
+                        <CTableDataCell>{user.idCard}</CTableDataCell>
+                        <CTableDataCell>{user.name}</CTableDataCell>
+                        <CTableDataCell>{user.lastName}</CTableDataCell>
+                        <CTableDataCell>{user.phone}</CTableDataCell>
+                        <CTableDataCell>{user.email}</CTableDataCell>
+                        <CTableDataCell style={{display:"flex",justifyContent:"flex-end"}}>
+                            <CButton className="update" onClick={() => { setUpdateData(user); setModalVisible(true); }}>
+                            <CIcon icon={cilPencil} />
+                          </CButton>
+                          <CButton className="delete" onClick={() => deleteUser(user.id)}>
+                            <CIcon icon={cilTrash} />
+                          </CButton>
+                        </CTableDataCell>
+                      </CTableRow>
+                    ))
+                  )}
+                </CTableBody>
+              </CTable>
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
+      <div className={`modal ${modalVisible2 ? 'show' : ''}`} style={{ display: modalVisible2 ? 'block' : 'none' }} tabIndex="-1">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Confirmar Eliminación</h5>
+              <button type="button" className="btn-close" onClick={cancelDelete} aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <p>¿Estás seguro de que deseas eliminar este registro?</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" onClick={cancelDelete}>Cancelar</button>
+              <button type="button" className="btn btn-danger" onClick={confirmDelete}>Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={`modal modal-lg ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none', margin: '0 auto' }} tabIndex="-1">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">{updateData ? "Actualizar Usuario" : "Registrar Nuevo Usuario"}</h5>
+              <button type="button" className="btn-close" onClick={handleCancel} aria-label="Close"></button>
+            </div>
+            <div className ="modal-body">
               <CForm onSubmit={handleSubmit}>
                 <CRow className='mt-3'>
                   <CCol md={6}>
@@ -191,7 +285,7 @@ const AUsers = () => {
                     />
                   </CCol>
                 </CRow>
-                <CRow className="mt-3">
+                <CRow className="mt-3 mb-3">
                   <CCol md={6}>
                     <CFormInput
                       type="email"
@@ -210,7 +304,7 @@ const AUsers = () => {
                       id="password"
                       name="password"
                       label="Contraseña"
-                      placeholder="Ingrese la contraseña"
+                      placeholder="Ingrese la contraseña" 
                       onChange={handleChange}
                       value={formData.password}
                       required
@@ -224,71 +318,6 @@ const AUsers = () => {
                   Cancelar
                 </CButton>
               </CForm>
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
-      <CRow>
-        <CCol>
-          <CCard>
-            <CCardHeader>
-              <h2>Lista de Usuarios</h2>
-            </CCardHeader>
-            <CCardBody>
-              <CTable hover responsive>
-                <CTableHead>
-                  <CTableRow>
-                    <CTableHeaderCell>Cédula</CTableHeaderCell>
-                    <CTableHeaderCell>Nombre</CTableHeaderCell>
-                    <CTableHeaderCell>Apellido</CTableHeaderCell>
-                    <CTableHeaderCell>Teléfono</CTableHeaderCell>
-                    <CTableHeaderCell>Correo Electrónico</CTableHeaderCell>
-                    <CTableHeaderCell></CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {users.length === 0 ? (
-                    <CTableRow>
-                      <CTableDataCell colSpan="7">No hay datos</CTableDataCell>
-                    </CTableRow>
-                  ) : (
-                    users.map((user) => (
-                      <CTableRow key={user.id}>
-                        <CTableDataCell>{user.idCard}</CTableDataCell>
-                        <CTableDataCell>{user.name}</CTableDataCell>
-                        <CTableDataCell>{user.lastName}</CTableDataCell>
-                        <CTableDataCell>{user.phone}</CTableDataCell>
-                        <CTableDataCell>{user.email}</CTableDataCell>
-                        <CTableDataCell>
-                          <CButton className="update" onClick={() => setUpdateData(user)}>
-                            <CIcon icon={cilPencil} />
-                          </CButton>
-                          <CButton className="delete" onClick={() => deleteUser (user.id)}>
-                            <CIcon icon={cilTrash} />
-                          </CButton>
-                        </CTableDataCell>
-                      </CTableRow>
-                    ))
-                  )}
-                </CTableBody>
-              </CTable>
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
-      <div className={`modal ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1">
-        <div className="modal-dialog modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Confirmar Eliminación</h5>
-              <button type="button" className="btn-close" onClick={cancelDelete} aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              <p>¿Estás seguro de que deseas eliminar este registro?</p>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" onClick={cancelDelete}>Cancelar</button>
-              <button type="button" className="btn btn-danger" id="ConfirmDelete" onClick={confirmDelete}>Eliminar</button>
             </div>
           </div>
         </div>

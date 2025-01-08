@@ -19,7 +19,7 @@ import {
   CFormSelect
 } from '@coreui/react';
 import { CIcon } from '@coreui/icons-react'; 
-import { cilPencil, cilTrash } from '@coreui/icons'; 
+import { cilPencil, cilTrash, cilUserPlus, cilSearch} from '@coreui/icons'; 
 
 const ADrivers = () => {
   const api = helpFetch();
@@ -29,7 +29,9 @@ const ADrivers = () => {
   const [municipalities, setMunicipalities] = useState([]); 
   const [filteredMunicipalities, setFilteredMunicipalities] = useState([]); 
   const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
+  const [modalVisible2, setModalVisible2] = useState(false); // Estado para el modal2
   const [driverToDelete, setDriverToDelete] = useState(null); 
+  const [searchTerm, setSearchTerm] = useState(''); //Estadi para el termino de busqueda
 
 
   useEffect(() => {
@@ -79,7 +81,7 @@ const ADrivers = () => {
 
   const deleteDriver = (id) => {
     setDriverToDelete(id); // Guarda el id del cliente a eliminar
-    setModalVisible(true); // Muestra el modal
+    setModalVisible2(true); // Muestra el modal
   };
 
   const confirmDelete = () => {
@@ -91,12 +93,12 @@ const ADrivers = () => {
         }
       });
     }
-    setModalVisible(false); // Cierra el modal
+    setModalVisible2(false); // Cierra el modal
     setDriverToDelete(null); // Resetea el cliente a eliminar
   };
 
   const cancelDelete = () => {
-    setModalVisible(false); // Cierra el modal sin hacer nada
+    setModalVisible2(false); // Cierra el modal sin hacer nada
     setDriverToDelete(null); // Resetea el cliente a eliminar
   };
 
@@ -140,6 +142,7 @@ const ADrivers = () => {
       addDriver(formData);
       resetForm();
     }
+    setModalVisible(false);
   };
 
   const handleChange = (e) => {
@@ -162,6 +165,7 @@ const ADrivers = () => {
 
   const handleCancel = () => {
     resetForm();
+    setModalVisible(false);
   };
 
   const resetForm = () => {
@@ -185,132 +189,41 @@ const ADrivers = () => {
     return acc;
   }, {});
 
+  const filteredDrivers = drivers.filter(driver => {
+    return (
+      driver.name_driver.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      driver.lastname_driver.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      driver.id_driver.includes(searchTerm)
+    );
+  });
+
   return (
     <CContainer>
       <CRow>
         <CCol>
-          <CCard className='mb-4'>
+          <CCard>
             <CCardHeader>
-              <h2>{updateData ? "Actualizar Chofer" : "Registrar Nuevo Chofer"}</h2>
+            <h2>Lista de Choferes</h2> 
             </CCardHeader>
-            <CCardBody>
-              <CForm onSubmit={handleSubmit}>
-                <CRow className='mt-3'>
-                  <CCol md={6}>
-                    <CFormInput
-                      type="text"
-                      id="id_driver"
-                      name="id_driver"
-                      label="Cédula"
-                      placeholder="Ingrese la cédula del chofer"
-                      onChange={handleChange}
-                      value={formData.id_driver}
-                      required
-                    />
-                  </CCol>
-                  <CCol md={6}>
-                    <CFormInput
-                      type="text"
-                      id="name_driver"
-                      name="name_driver"
-                      label="Nombre"
-                      placeholder="Ingrese el nombre"
-                      onChange={handleChange}
-                      value={formData.name_driver}
-                      required
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-3">
-                  <CCol md={6}>
-                    <CFormInput
-                      type="text"
-                      id="lastname_driver"
-                      name="lastname_driver"
-                      label="Apellido"
-                      placeholder="Ingrese el apellido"
-                      onChange={handleChange}
-                      value={formData.lastname_driver}
-                      required
-                    />
-                  </CCol>
-                  <CCol md={6}>
-                    <CFormSelect
-                      id="fkid_state"
-                      name="fkid_state"
-                      label="Estado"
-                      onChange={handleChange}
-                      value={formData.fkid_state}
-                      required
-                    >
-                      <option value="">Seleccione un estado...</option>
-                      {states.map(state => (
-                        <option key={state.id_state} value={state.id_state}>{state.name}</option>
-                      ))}
-                    </CFormSelect>
-                  </CCol>
-                </CRow>
-                <CRow className="mt-3">
-                  <CCol md={6}>
-                    <CFormSelect
-                      id="fkid_municipality"
-                      name="fkid_municipality"
-                      label="Municipio"
-                      onChange={handleChange}
-                      value={formData.fkid_municipality}
-                      required
-                    >
-                      <option value="">Seleccione un municipio...</option>
-                      {filteredMunicipalities.map(municipality => (
-                        <option key={municipality.id_municipality} value={municipality.id_municipality}>{municipality.name}</option>
-                      ))}
-                    </CFormSelect>
-                  </CCol>
-                  <CCol md={6}>
-                    <CFormInput
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      label="Teléfono"
-                      placeholder="Ingrese el teléfono"
-                      onChange={handleChange}
-                      value={formData.phone}
-                      required
-                    />
-                  </CCol>
-                </CRow>
-                <CRow className="mt-3">
-                  <CCol md={6}>
-                    <CFormSelect
-                      id="status_driver"
-                      name="status_driver"
-                      label="Estado del Chofer"
-                      onChange={handleChange}
-                      value={formData.status_driver}
-                      required
-                    >
-                      <option value="activo">Activo</option>
-                      <option value="inactivo">Inactivo</option>
-                    </CFormSelect>
-                  </CCol>
-                </CRow>
-                <CButton type="submit" color="primary" className="mt-3">
-                  {updateData ? "Actualizar" : "Registrar"}
-                </CButton>
-                <CButton type="button" color="secondary" className="mt-3 ms-2" onClick={handleCancel}>
-                  Cancelar
-                </CButton>
-              </CForm>
-            </CCardBody>
           </CCard>
         </CCol>
       </CRow>
       <CRow>
         <CCol>
-          <CCard>
-            <CCardHeader>
-              <h2>Lista de Choferes</h2>
-            </CCardHeader>
+          <CCard className='mb-4'>
+            <CCardHeader style={{display:"flex", alignItems:"center"}}>
+                <CIcon icon={cilSearch}/>
+                <CFormInput
+                    type="text"
+                    placeholder = "Buscar por cédula o nombre..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{ width: '300px', marginLeft:"10px",marginRight:"600px"}} // Ajusta el ancho según sea necesario
+                />
+                <CButton color="primary" onClick={() => setModalVisible(true)}>
+                    <CIcon icon={cilUserPlus} />
+                  </CButton>
+              </CCardHeader>
             <CCardBody>
               <CTable hover responsive>
                 <CTableHead>
@@ -320,31 +233,33 @@ const ADrivers = () => {
                     <CTableHeaderCell>Apellido</CTableHeaderCell>
                     <CTableHeaderCell>Teléfono</CTableHeaderCell>
                     <CTableHeaderCell>Municipio</CTableHeaderCell>
+                    <CTableHeaderCell>Licencia</CTableHeaderCell>
                     <CTableHeaderCell>Estado</CTableHeaderCell>
                     <CTableHeaderCell>Fecha de Creación</CTableHeaderCell>
                     <CTableHeaderCell></CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {drivers.length === 0 ? (
+                  {filteredDrivers.length === 0 ? (
                     <CTableRow>
                       <CTableDataCell colSpan="8">No hay datos</CTableDataCell>
                     </CTableRow>
                   ) : (
-                    drivers.map((driver) => (
+                    filteredDrivers.map((driver) => (
                       <CTableRow key={driver.id}>
                         <CTableDataCell>{driver.id_driver}</CTableDataCell>
                         <CTableDataCell>{driver.name_driver}</CTableDataCell>
                         <CTableDataCell>{driver.lastname_driver}</CTableDataCell>
                         <CTableDataCell>{driver.phone}</CTableDataCell>
                         <CTableDataCell>{municipalityMap[driver.fkid_municipality] || 'N/A'}</CTableDataCell>
+                        <CTableDataCell>{driver.license}</CTableDataCell>
                         <CTableDataCell>{driver.status_driver}</CTableDataCell>
                         <CTableDataCell>{new Date(driver.created_at).toLocaleDateString()}</CTableDataCell>
-                        <CTableDataCell>
-                          <CButton className="update" onClick={() => setUpdateData(driver)}>
+                        <CTableDataCell style={{display:"flex",justifyContent:"flex-end"}}>
+                          <CButton className="update" onClick={() => {setUpdateData(driver); setModalVisible(true);}}>
                             <CIcon icon={cilPencil} />
                           </CButton>
-                          <CButton className="delete" onClick={() => deleteDriver(driver.id)}>
+                          <CButton className="delete" onClick={() => {deleteDriver(driver.id); setModalVisible2(true);}}>
                             <CIcon icon={cilTrash} />
                           </CButton>
                         </CTableDataCell>
@@ -357,7 +272,7 @@ const ADrivers = () => {
           </CCard>
         </CCol>
       </CRow>
-      <div className={`modal ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1">
+      <div className={`modal ${modalVisible2 ? 'show' : ''}`} style={{ display: modalVisible2 ? 'block' : 'none' }} tabIndex="-1">
         <div className="modal-dialog modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
@@ -374,6 +289,139 @@ const ADrivers = () => {
           </div>
         </div>
       </div>
+      <div className={`modal modal-lg ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none', margin: '0 auto' }} tabIndex="-1">
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">{updateData ? "Actualizar Chofer" : "Registrar Nuevo Chofer"}</h5>
+                    <button type="button" className="btn-close" onClick={handleCancel} aria-label="Close"></button>
+                  </div>
+                  <div className ="modal-body">
+                  <CForm onSubmit={handleSubmit}>
+                    <CRow className='mt-3'>
+                      <CCol md={6}>
+                        <CFormInput
+                          type="text"
+                          id="id_driver"
+                          name="id_driver"
+                          label="Cédula"
+                          placeholder="Ingrese la cédula del chofer"
+                          onChange={handleChange}
+                          value={formData.id_driver}
+                          required
+                        />
+                      </CCol>
+                      <CCol md={6}>
+                        <CFormInput
+                          type="text"
+                          id="name_driver"
+                          name="name_driver"
+                          label="Nombre"
+                          placeholder="Ingrese el nombre"
+                          onChange={handleChange}
+                          value={formData.name_driver}
+                          required
+                        />
+                      </CCol>
+                    </CRow>
+                    <CRow className="mt-3">
+                      <CCol md={6}>
+                        <CFormInput
+                          type="text"
+                          id="lastname_driver"
+                          name="lastname_driver"
+                          label="Apellido"
+                          placeholder="Ingrese el apellido"
+                          onChange={handleChange}
+                          value={formData.lastname_driver}
+                          required
+                        />
+                      </CCol>
+                      <CCol md={6}>
+                        <CFormSelect
+                          id="fkid_state"
+                          name="fkid_state"
+                          label="Estado"
+                          onChange={handleChange}
+                          value={formData.fkid_state}
+                          required
+                        >
+                          <option value="">Seleccione un estado...</option>
+                          {states.map(state => (
+                            <option key={state.id_state} value={state.id_state}>{state.name}</option>
+                          ))}
+                        </CFormSelect>
+                      </CCol>
+                    </CRow>
+                    <CRow className="mt-3">
+                      <CCol md={6}>
+                        <CFormSelect
+                          id="fkid_municipality"
+                          name="fkid_municipality"
+                          label="Municipio"
+                          onChange={handleChange}
+                          value={formData.fkid_municipality}
+                          required
+                        >
+                          <option value="">Seleccione un municipio...</option>
+                          {filteredMunicipalities.map(municipality => (
+                            <option key={municipality.id_municipality} value={municipality.id_municipality}>{municipality.name}</option>
+                          ))}
+                        </CFormSelect>
+                      </CCol>
+                      <CCol>
+                        <CFormSelect
+                          id="license"
+                          name="license"
+                          label="Licencia"
+                          onChange={handleChange}
+                          value={formData.license}
+                          required
+                        >
+                          <option value="">Seleccione una licencia...</option>
+                          <option value="4ta">4ta</option>
+                          <option value="5ta">5ta</option>
+                        </CFormSelect>
+                      </CCol>
+                    </CRow>
+                    <CRow className="mt-3 mb-3">
+                    <CCol md={6}>
+                        <CFormInput
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          label="Teléfono"
+                          placeholder="Ingrese el teléfono"
+                          onChange={handleChange}
+                          value={formData.phone}
+                          required
+                        />
+                      </CCol>
+                      <CCol md={6}>
+                        <CFormSelect
+                          id="status_driver"
+                          name="status_driver"
+                          label="Estado del Chofer"
+                          onChange={handleChange}
+                          value={formData.status_driver}
+                          required
+                        >
+                          <option value="activo">Activo</option>
+                          <option value="inactivo">Inactivo</option>
+                        </CFormSelect>
+                      </CCol>
+                    </CRow>
+                    <CButton type="submit" color="primary" className="mt-3">
+                      {updateData ? "Actualizar" : "Registrar"}
+                    </CButton>
+                    <CButton type="button" color="secondary" className="mt-3 ms-2" onClick={handleCancel}>
+                      Cancelar
+                    </CButton>
+                  </CForm>
+                  </div>
+                </div>
+              </div>
+            </div>
     </CContainer>
   );
 };
