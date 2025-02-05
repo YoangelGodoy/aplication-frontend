@@ -33,21 +33,19 @@ const AppSidebar = () => {
         dispatch({ type: 'set', sidebarShow: visible });
       }}
     >
-      <CSidebarHeader className="border-bottom">
-        <CSidebarBrand to="/">
-          <img className='logo' src={logo} alt="Logo" style={{ width: '100%', height: 'auto' }} />
-        </CSidebarBrand>
-        <CCloseButton
-          className="d-lg-none"
-          dark
-          onClick={() => dispatch({ type: 'set', sidebarShow: false })}
-        />
+      <CSidebarHeader>
+      <div className="border-bottom-logo" style={{paddingBottom:"17px", paddingTop:"5x", display: "flex", alignItems: "center", justifyContent: "left", textAlign: "center"}}>
+        <img className='logo' src={logo} alt="Logo" style={{ width: '100%', height: 'auto' }} />
+      </div>  
       </CSidebarHeader>
       <AppSidebarNav items={navigation} />
-      <CSidebarFooter className="border-top d-none d-lg-flex">
+      
+      <CSidebarFooter>
+      <div className="border-top-logo" style={{paddingBottom:"1px", paddingTop:"15px", display: "flex", alignItems: "center", justifyContent: "left", textAlign: "center"}}>
         <CSidebarToggler
           onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
         />
+        </div>
       </CSidebarFooter>
     </CSidebar>
   );

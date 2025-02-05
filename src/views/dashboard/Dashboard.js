@@ -27,23 +27,23 @@ const IntegratedDashboard = () => {
   const [users, setUsers] = useState([])
   const api = helpFetch()
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+  // useEffect(() => {
+  //   fetchData()
+  // }, [])
 
-  const fetchData = async () => {
-    const driversResponse = await api.get("driver")
-    if (!driversResponse.error) setDrivers(driversResponse)
+  // const fetchData = async () => {
+  //   const driversResponse = await api.get("driver")
+  //   if (!driversResponse.error) setDrivers(driversResponse)
 
-    const clientsResponse = await api.get("client")
-    if (!clientsResponse.error) setClients(clientsResponse)
+  //   const clientsResponse = await api.get("client")
+  //   if (!clientsResponse.error) setClients(clientsResponse)
 
-    const usersResponse = await api.get("users")
-    if (!usersResponse.error) {
-      setUsers(usersResponse)
-    }
+  //   const usersResponse = await api.get("users")
+  //   if (!usersResponse.error) {
+  //     setUsers(usersResponse)
+  //   }
 
-  }
+  // }
 
   return (
     <CRow>
@@ -163,7 +163,7 @@ const IntegratedDashboard = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {users.map((user, index) => (
+                {/* {users.map((user, index) => (
                   <CTableRow key={index}>
                     <CTableDataCell className="text-center">
                       <CAvatar size="md" src={`https://ui-avatars.com/api/?name=${user.name}+${user.lastName}&background=random`} />
@@ -177,7 +177,7 @@ const IntegratedDashboard = () => {
                     <CTableDataCell>{user.idCard}</CTableDataCell>
                     <CTableDataCell>{user.phone}</CTableDataCell>
                   </CTableRow>
-                ))}
+                ))} */}
               </CTableBody>
             </CTable>
           </CCardBody>
@@ -199,13 +199,13 @@ const IntegratedDashboard = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {drivers.slice(0, 5).map((driver) => (
+                {/* {drivers.slice(0, 5).map((driver) => (
                   <CTableRow key={driver.id}>
                     <CTableDataCell>{driver.id_driver}</CTableDataCell>
                     <CTableDataCell>{`${driver.name_driver} ${driver.lastname_driver}`}</CTableDataCell>
                     <CTableDataCell>{driver.phone}</CTableDataCell>
                   </CTableRow>
-                ))}
+                ))} */}
               </CTableBody>
             </CTable>
           </CCardBody>
@@ -227,13 +227,13 @@ const IntegratedDashboard = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {clients.slice(0, 5).map((client) => (
+                {/* {clients.slice(0, 5).map((client) => (
                   <CTableRow key={client.id}>
                     <CTableDataCell>{client.id_client}</CTableDataCell>
                     <CTableDataCell>{`${client.name_client} ${client.lastname_client}`}</CTableDataCell>
                     <CTableDataCell>{client.phone}</CTableDataCell>
                   </CTableRow>
-                ))}
+                ))} */}
               </CTableBody>
             </CTable>
           </CCardBody>

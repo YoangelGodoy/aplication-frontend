@@ -3,6 +3,7 @@ import { helpFetch } from '/src/components/helpers/helpFetch';
 import {
   CForm,
   CFormInput,
+  CFormSelect,
   CButton,
   CCard,
   CCardBody,
@@ -18,7 +19,7 @@ import {
   CTableDataCell
 } from '@coreui/react';
 import { CIcon } from '@coreui/icons-react'; 
-import { cilPencil, cilTrash, cilUserPlus, cilSearch} from '@coreui/icons'; 
+import { cilPencil, cilTrash, cilUserPlus, cilSearch } from '@coreui/icons'; 
 
 const AUsers = () => {
   const api = helpFetch();
@@ -30,27 +31,51 @@ const AUsers = () => {
   const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
 
   useEffect(() => {
+    // Fetch users
     api.get("users").then((response) => {
-      if (!response.error) setUsers(response);
+      if (response && response.users && response.users.length) {
+        setUsers(response.users);
+      } else {
+        setUsers([]);
+      }
+      
+    }).catch((error) => {
+      console.error("Error al obtener los users:", error);
+      setUsers([]);
     });
   }, []);
 
   const addUser  = (user) => {
     const options = { body: user };
-
-    api.post("users", options).then((response) => {
-      if (!response.error) setUsers([...users, response]);
+  
+    api.post("register", options).then((response) => {
+      if (!response.error) {
+        setUsers([...users, response]);
+        window.location.reload()
+      } else {
+        console.error("Error en la respuesta del servidor:", response.error);
+      }
+    }).catch((error) => {
+      console.error("Error al agregar usuario:", error);
     });
   };
 
   const updateUser  = (user) => {
     const options = { body: { ...user, updated_at: new Date().toISOString() } };
 
-    api.put("users", options, user.id).then((response) => {
+    // Eliminar campos de contraseña y preguntas de seguridad si están vacíos
+    if (!user.password) delete options.body.password;
+    if (!user.question1) delete options.body.question1;
+    if (!user.answer1) delete options.body.answer1;
+    if (!user.question2) delete options.body.question2;
+    if (!user.answer2) delete options.body.answer2;
+
+    api.put("userUpdate", options, user.id).then((response) => {
       if (!response.error) {
         const newUsers = users.map(el => el.id === user.id ? response : el);
         setUsers(newUsers);
         setUpdateData(null);
+        window.location.reload()
       }
     });
   };
@@ -62,10 +87,11 @@ const AUsers = () => {
 
   const confirmDelete = () => {
     if (userToDelete) {
-      api.delet("users", userToDelete).then((response) => {
+      api.delet("delete", userToDelete).then((response) => {
         if (!response.error) {
           const newUsers = users.filter(el => el.id !== String(userToDelete));
           setUsers(newUsers);
+          window.location.reload()
         }
       });
     }
@@ -79,13 +105,19 @@ const AUsers = () => {
   };
 
   const [formData, setFormData] = useState({
-    id: '',
-    idCard: '',
+    id_user: '',
     name: '',
-    lastName: '',
-    phone: '',
+    lastname: '',
     email: '',
     password: '',
+    question1: '',
+    answer1: '',
+    question2: '',
+    answer2: '',
+    rol_id: '',
+    phone: '',
+    created_at: '',
+    updated_at: ''
   });
 
   useEffect(() => {
@@ -98,6 +130,12 @@ const AUsers = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Validar que el correo electrónico no esté duplicado
+    const emailExists = users.some(user => user.email === formData.email && user.id !== formData.id);
+    if (emailExists) {
+      alert('El correo electrónico ya está registrado.');
+      return;
+    }
     if (updateData != null) {
       updateUser (formData);
     } else {
@@ -109,10 +147,22 @@ const AUsers = () => {
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    if (name === 'phone') {
+      // Validar que solo se permitan 11 números
+      const phoneRegex = /^[0-9]{0,11}$/;
+      if (phoneRegex.test(value)) {
+        setFormData({
+          ...formData,
+          [name]: value
+        });
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
   };
 
   const handleCancel = () => {
@@ -122,30 +172,36 @@ const AUsers = () => {
 
   const resetForm = () => {
     setFormData({
-      id: '',
-      idCard: '',
+      id_user: '',
       name: '',
-      lastName: '',
-      phone: '',
+      lastname: '',
       email: '',
       password: '',
+      question1: '',
+      answer1: '',
+      question2: '',
+      answer2: '',
+      rol_id: '',
+      phone: '',
+      created_at: '',
+      updated_at: ''
     });
     setUpdateData(null);
   };
 
   // Filtrar usuarios por cédula y nombre
   const filteredUsers = users.filter(user => {
-    return (
+    if(user.name && user.lastname && user.id_user){return (
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.idCard.includes(searchTerm)
-    );
+      user.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.id_user.includes(searchTerm)
+    );}
   });
 
   return (
     <CContainer>
       <CCard>
-        <CCardHeader>
+        <CCardHeader className='bg-primary text-white'>
           <h2>Lista de Usuarios</h2>
         </CCardHeader>
       </CCard>
@@ -161,7 +217,7 @@ const AUsers = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     style={{ width: '300px', marginLeft:"10px",marginRight:"600px"}} // Ajusta el ancho según sea necesario
                   />
-                  <CButton color="primary" onClick={() => setModalVisible(true)}>
+                  <CButton color="success" onClick={() => setModalVisible(true)}>
                     <CIcon icon={cilUserPlus} />
                   </CButton>
               </CCardHeader>
@@ -172,8 +228,9 @@ const AUsers = () => {
                     <CTableHeaderCell>Cédula</CTableHeaderCell>
                     <CTableHeaderCell>Nombre</CTableHeaderCell>
                     <CTableHeaderCell>Apellido</CTableHeaderCell>
-                    <CTableHeaderCell>Teléfono</CTableHeaderCell>
                     <CTableHeaderCell>Correo Electrónico</CTableHeaderCell>
+                    <CTableHeaderCell>Rol</CTableHeaderCell>
+                    <CTableHeaderCell>Teléfono</CTableHeaderCell>
                     <CTableHeaderCell></CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
@@ -185,11 +242,12 @@ const AUsers = () => {
                   ) : (
                     filteredUsers.map((user) => (
                       <CTableRow key={user.id}>
-                        <CTableDataCell>{user.idCard}</CTableDataCell>
+                        <CTableDataCell>{user.id_user}</CTableDataCell>
                         <CTableDataCell>{user.name}</CTableDataCell>
-                        <CTableDataCell>{user.lastName}</CTableDataCell>
-                        <CTableDataCell>{user.phone}</CTableDataCell>
+                        <CTableDataCell>{user.lastname}</CTableDataCell>
                         <CTableDataCell>{user.email}</CTableDataCell>
+                        <CTableDataCell>{user.rol_id}</CTableDataCell>
+                        <CTableDataCell>{user.phone}</CTableDataCell>
                         <CTableDataCell style={{display:"flex",justifyContent:"flex-end"}}>
                             <CButton className="update" onClick={() => { setUpdateData(user); setModalVisible(true); }}>
                             <CIcon icon={cilPencil} />
@@ -227,8 +285,8 @@ const AUsers = () => {
       <div className={`modal modal-lg ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none', margin: '0 auto' }} tabIndex="-1">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">{updateData ? "Actualizar Usuario" : "Registrar Nuevo Usuario"}</h5>
+            <div className="modal-header text-white bg-primary">
+              <h3 className="modal-title">{updateData ? "Actualizar Usuario" : "Registrar Nuevo Usuario"}</h3>
               <button type="button" className="btn-close" onClick={handleCancel} aria-label="Close"></button>
             </div>
             <div className ="modal-body">
@@ -237,13 +295,14 @@ const AUsers = () => {
                   <CCol md={6}>
                     <CFormInput
                       type="text"
-                      id="idCard"
-                      name="idCard"
+                      id="id_user"
+                      name="id_user"
                       label="Cédula"
                       placeholder="Ingrese la cédula del usuario"
                       onChange={handleChange}
-                      value={formData.idCard}
+                      value={formData.id_user}
                       required
+                      autoComplete="id_user" 
                     />
                   </CCol>
                   <CCol md={6}>
@@ -256,6 +315,7 @@ const AUsers = () => {
                       onChange={handleChange}
                       value={formData.name}
                       required
+                      autoComplete="name"
                     />
                   </CCol>
                 </CRow>
@@ -263,13 +323,14 @@ const AUsers = () => {
                   <CCol md={6}>
                     <CFormInput
                       type="text"
-                      id="lastName"
-                      name="lastName"
+                      id="lastname"
+                      name="lastname"
                       label="Apellido"
                       placeholder="Ingrese el apellido"
                       onChange={handleChange}
-                      value={formData.lastName}
+                      value={formData.lastname}
                       required
+                      autoComplete="lastname" 
                     />
                   </CCol>
                   <CCol md={6}>
@@ -282,6 +343,7 @@ const AUsers = () => {
                       onChange={handleChange}
                       value={formData.phone}
                       required
+                      autoComplete="phone"
                     />
                   </CCol>
                 </CRow>
@@ -296,19 +358,92 @@ const AUsers = () => {
                       onChange={handleChange}
                       value={formData.email}
                       required
+                      autoComplete="email"
                     />
                   </CCol>
+                  {!updateData && (
+                    <>
+                      <CCol md={6}>
+                        <CFormInput
+                          type="password"
+                          id="password"
+                          name="password"
+                          label="Contraseña"
+                          placeholder="Ingrese la contraseña" 
+                          onChange={handleChange}
+                          value={formData.password}
+                          autoComplete="current-password"
+                        />
+                      </CCol>
+                      <CRow className="mt-3 mb-3">
+                        <CCol md={6}>
+                          <CFormInput
+                            type="text"
+                            id="question1"
+                            name="question1"
+                            label="Pregunta de Seguridad 1"
+                            placeholder="Ingrese la pregunta de seguridad 1"
+                            onChange={handleChange}
+                            value={formData.question1}
+                            autoComplete="question1"
+                          />
+                        </CCol>
+                        <CCol md={6}>
+                          <CFormInput
+                            type="text"
+                            id="answer1"
+                            name="answer1"
+                            label="Respuesta 1"
+                            placeholder="Ingrese la respuesta 1"
+                            onChange={handleChange}
+                            value={formData.answer1}
+                            autoComplete="answer1"
+                          />
+                        </CCol>
+                      </CRow>
+                      <CRow className="mt-3 mb-3">
+                        <CCol md={6}>
+                          <CFormInput
+                            type="text"
+                            id="question2"
+                            name="question2"
+                            label="Pregunta de Seguridad 2"
+                            placeholder="Ingrese la pregunta de seguridad 2"
+                            onChange={handleChange}
+                            value={formData.question2}
+                            autoComplete="question2"
+                          />
+                        </CCol>
+                        <CCol md={6}>
+                          <CFormInput
+                            type="text"
+                            id="answer2"
+                            name="answer2"
+                            label="Respuesta 2"
+                            placeholder="Ingrese la respuesta 2"
+                            onChange={handleChange}
+                            value={formData.answer2}
+                            autoComplete="answer2"
+                          />
+                        </CCol>
+                      </CRow>
+                    </>
+                  )}
+                </CRow>
+                <CRow className="mt-3 mb-3">
                   <CCol md={6}>
-                    <CFormInput
-                      type="password"
-                      id="password"
-                      name="password"
-                      label="Contraseña"
-                      placeholder="Ingrese la contraseña" 
+                    <CFormSelect
+                      id="rol_id"
+                      name="rol_id"
+                      label="Rol"
                       onChange={handleChange}
-                      value={formData.password}
+                      value={formData.rol_id}
                       required
-                    />
+                    >
+                      <option value="">Seleccione un rol...</option>
+                      <option value="6">Administrador</option>
+                      <option value="7">Assitente</option>
+                    </CFormSelect>
                   </CCol>
                 </CRow>
                 <CButton type="submit" color="primary" className="mt-3">

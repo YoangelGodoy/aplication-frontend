@@ -1,10 +1,11 @@
 export const helpFetch=()=>{
-    const URL="http://localhost:3004/"
+    const URL = "http://localhost:4000/api/v1/"
 
     const customFetch=(endpoint, options = {})=>{
     options.method = options.method || "GET"
     options.headers = {
-        "content-type": "application/json"
+        "content-type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem('token')}` // Añade esta línea
     }
 
     if(options.body){

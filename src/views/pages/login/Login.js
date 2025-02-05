@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   CButton,
   CCard,
@@ -14,46 +14,44 @@ import {
   CRow,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { cilLockLocked, cilUser  } from '@coreui/icons';
+import { cilLockLocked, cilUser } from '@coreui/icons';
 import '../../../scss/_custom.scss';
 import { helpFetch } from '../../../components/helpers/helpFetch';
 
 const api = helpFetch();
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  
   useEffect(() => {
-    const loggedInUser  = localStorage.getItem('user');
-    if (loggedInUser ) {
+    const loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
       navigate('/dashboard');
     }
   }, [navigate]);
 
-  
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMessage('');
 
     try {
-      const usersRes = await api.get("users");
+      const options = {
+        body: { email, password },
+      };
+      console.log("Sending login request with data:", options.body); // Agregar depuración
+      const response = await api.post("login", options);
+      console.log("Response from server:", response); // Agregar depuración para ver la respuesta completa
 
-      if (!usersRes.err) {
-        const user = usersRes.find(user => user.name === username && user.password === password);
-
-        if (user) {
-          console.log('Login successful:', user);
-          localStorage.setItem('user', JSON.stringify(user));
-          navigate('/dashboard');
-        } else {
-          setErrorMessage('Invalid username or password');
-        }
+      if (response && response.token) {
+        console.log('Login successful:', response);
+        localStorage.setItem('token', response.token); // Almacenar el token en el localStorage
+        localStorage.setItem('user', JSON.stringify(response));
+        navigate('/dashboard');
       } else {
-        setErrorMessage('Error fetching user data');
+        setErrorMessage('Invalid email or password');
       }
     } catch (error) {
       setErrorMessage('An unexpected error occurred.');
@@ -72,10 +70,10 @@ const Login = () => {
                     <h1>Login</h1>
                     <p className="text-body-secondary">Sign In to your account</p>
                     <InputGroup
-                      icon={cilUser }
-                      placeholder="Username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      icon={cilUser}
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                     <InputGroup
                       icon={cilLockLocked}
@@ -124,7 +122,7 @@ const InputGroup = ({ icon, placeholder, value, onChange, type = 'text' }) => (
     <CFormInput
       type={type}
       placeholder={placeholder}
-      autoComplete={type === 'password' ? 'current-password ' : 'username'}
+      autoComplete={type === 'password' ? 'current-password' : 'username'}
       value={value}
       onChange={onChange}
     />

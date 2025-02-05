@@ -19,7 +19,7 @@ import {
   CFormSelect
 } from '@coreui/react';
 import { CIcon } from '@coreui/icons-react'; 
-import { cilPencil, cilTrash, cilUserPlus, cilSearch} from '@coreui/icons'; 
+import { cilPencil, cilTrash, cilUserPlus, cilSearch } from '@coreui/icons'; 
 
 const ADrivers = () => {
   const api = helpFetch();
@@ -31,54 +31,76 @@ const ADrivers = () => {
   const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
   const [modalVisible2, setModalVisible2] = useState(false); // Estado para el modal2
   const [driverToDelete, setDriverToDelete] = useState(null); 
-  const [searchTerm, setSearchTerm] = useState(''); //Estadi para el termino de busqueda
-
+  const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
 
   useEffect(() => {
     // Fetch drivers
-    api.get("driver").then((response) => {
-      if (!response.error) setDrivers(response);
+    api.get("drivers").then((response) => {
+      if (response && response.drivers && response.drivers.length) {
+        setDrivers(response.drivers);
+      } else {
+        setDrivers([]);
+      }
+      
+    }).catch((error) => {
+      console.error("Error al obtener los drivers:", error);
+      setDrivers([]);
     });
 
     // Fetch states
-    const fetchStates = async () => {
-      const response = await api.get("state"); 
-      if (!response.error) setStates(response);
-    };
+    api.get("states").then((response) => {
 
-    fetchStates();
-  }, []);
+      if (response && response.states && response.states.length) {
+        setStates(response.states);
+      } else {
+        setStates([]);
+      }
+      
+    }).catch((error) => {
+      console.error("Error al obtener los States:", error);
+      setStates([]);
+    });
 
-  useEffect(() => {
     // Fetch municipalities
-    const fetchMunicipalities = async () => {
-      const response = await api.get("municipality"); 
-      if (!response.error) setMunicipalities(response);
-    };
-
-    fetchMunicipalities();
+    api.get("municipality").then((response) => {
+      console.log("municipalities:", response)
+      if (response && response.municipality && response.municipality.length) {
+        setMunicipalities(response.municipality);
+      } else {
+        setMunicipalities([]);
+      }
+      
+    }).catch((error) => {
+      console.error("Error al obtener los Municipalities:", error);
+      setMunicipalities([]);
+    });
+    
   }, []);
 
   const addDriver = (add) => {
     const options = { body: add };
 
-    api.post("driver", options).then((response) => {
-      if (!response.error) setDrivers([...drivers, response]);
+    api.post("drivercreate", options).then((response) => {
+      if (!response.error) setDrivers([...drivers, response]); 
+      // Refrescar la página
+      window.location.reload();
     });
   };
 
   const updateDriver = (add) => {
     const options = { body: { ...add, updated_at: new Date().toISOString() } };
-
-    api.put("driver", options, add.id).then((response) => {
+  
+    api.put("driverUpdate", options, add.id_driver).then((response) => {
       if (!response.error) {
         const newDrivers = drivers.map(el => el.id === add.id ? response : el);
         setDrivers(newDrivers);
         setUpdateData(null);
+        // Refrescar la página
+        window.location.reload();
       }
     });
   };
-
+  
   const deleteDriver = (id) => {
     setDriverToDelete(id); // Guarda el id del cliente a eliminar
     setModalVisible2(true); // Muestra el modal
@@ -86,7 +108,7 @@ const ADrivers = () => {
 
   const confirmDelete = () => {
     if (driverToDelete) {
-      api.delet("driver", driverToDelete).then((response) => {
+      api.delet("driverDelete", driverToDelete).then((response) => {
         if (!response.error) {
           const newDrivers = drivers.filter(el => el.id !== String(driverToDelete));
           setDrivers(newDrivers);
@@ -95,6 +117,8 @@ const ADrivers = () => {
     }
     setModalVisible2(false); // Cierra el modal
     setDriverToDelete(null); // Resetea el cliente a eliminar
+    // // Refrescar la página
+    window.location.reload();
   };
 
   const cancelDelete = () => {
@@ -111,7 +135,6 @@ const ADrivers = () => {
     status_driver: '',
     created_at: '',
     updated_at: '',
-    id: null,
     fkid_state: ''
   });
 
@@ -138,7 +161,6 @@ const ADrivers = () => {
       const currentDate = new Date().toISOString();
       formData.created_at = currentDate;
       formData.updated_at = currentDate;
-      formData.id = Date.now().toString();
       addDriver(formData);
       resetForm();
     }
@@ -178,7 +200,6 @@ const ADrivers = () => {
       status_driver: '',
       created_at: '',
       updated_at: '',
-      id: null,
     });
     setUpdateData(null);
     setFilteredMunicipalities([]);
@@ -190,11 +211,13 @@ const ADrivers = () => {
   }, {});
 
   const filteredDrivers = drivers.filter(driver => {
-    return (
+    if(driver.name_driver && driver.lastname_driver && driver.id_driver){
+      return (
       driver.name_driver.toLowerCase().includes(searchTerm.toLowerCase()) ||
       driver.lastname_driver.toLowerCase().includes(searchTerm.toLowerCase()) ||
       driver.id_driver.includes(searchTerm)
     );
+    }
   });
 
   return (
@@ -202,7 +225,7 @@ const ADrivers = () => {
       <CRow>
         <CCol>
           <CCard>
-            <CCardHeader>
+            <CCardHeader className="text-white bg-primary">
             <h2>Lista de Choferes</h2> 
             </CCardHeader>
           </CCard>
@@ -220,7 +243,7 @@ const ADrivers = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     style={{ width: '300px', marginLeft:"10px",marginRight:"600px"}} // Ajusta el ancho según sea necesario
                 />
-                <CButton color="primary" onClick={() => setModalVisible(true)}>
+                <CButton color="success" onClick={() => setModalVisible(true)}>
                     <CIcon icon={cilUserPlus} />
                   </CButton>
               </CCardHeader>
@@ -240,13 +263,13 @@ const ADrivers = () => {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {filteredDrivers.length === 0 ? (
+                  {drivers.length === 0 ? (
                     <CTableRow>
                       <CTableDataCell colSpan="8">No hay datos</CTableDataCell>
                     </CTableRow>
                   ) : (
                     filteredDrivers.map((driver) => (
-                      <CTableRow key={driver.id}>
+                      <CTableRow key={driver.id_driver}>
                         <CTableDataCell>{driver.id_driver}</CTableDataCell>
                         <CTableDataCell>{driver.name_driver}</CTableDataCell>
                         <CTableDataCell>{driver.lastname_driver}</CTableDataCell>
@@ -259,7 +282,7 @@ const ADrivers = () => {
                           <CButton className="update" onClick={() => {setUpdateData(driver); setModalVisible(true);}}>
                             <CIcon icon={cilPencil} />
                           </CButton>
-                          <CButton className="delete" onClick={() => {deleteDriver(driver.id); setModalVisible2(true);}}>
+                          <CButton className="delete" onClick={() => {deleteDriver(driver.id_driver); setModalVisible2(true);}}>
                             <CIcon icon={cilTrash} />
                           </CButton>
                         </CTableDataCell>
@@ -292,8 +315,8 @@ const ADrivers = () => {
       <div className={`modal modal-lg ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none', margin: '0 auto' }} tabIndex="-1">
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title">{updateData ? "Actualizar Chofer" : "Registrar Nuevo Chofer"}</h5>
+                  <div className="modal-header text-white bg-primary">
+                    <h3 className="modal-title">{updateData ? "Actualizar Chofer" : "Registrar Nuevo Chofer"}</h3>
                     <button type="button" className="btn-close" onClick={handleCancel} aria-label="Close"></button>
                   </div>
                   <div className ="modal-body">
@@ -337,21 +360,6 @@ const ADrivers = () => {
                           required
                         />
                       </CCol>
-                      <CCol md={6}>
-                        <CFormSelect
-                          id="fkid_state"
-                          name="fkid_state"
-                          label="Estado"
-                          onChange={handleChange}
-                          value={formData.fkid_state}
-                          required
-                        >
-                          <option value="">Seleccione un estado...</option>
-                          {states.map(state => (
-                            <option key={state.id_state} value={state.id_state}>{state.name}</option>
-                          ))}
-                        </CFormSelect>
-                      </CCol>
                     </CRow>
                     <CRow className="mt-3">
                       <CCol md={6}>
@@ -364,7 +372,7 @@ const ADrivers = () => {
                           required
                         >
                           <option value="">Seleccione un municipio...</option>
-                          {filteredMunicipalities.map(municipality => (
+                          {municipalities.map(municipality => (
                             <option key={municipality.id_municipality} value={municipality.id_municipality}>{municipality.name}</option>
                           ))}
                         </CFormSelect>
